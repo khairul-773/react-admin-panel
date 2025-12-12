@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"],
+  "vite": {
+    "plugins": [
+      {
+        "name": "vite-plugin-react",
+        "options": {}
+      }
+    ],
+    "resolve": {
+      "alias": {
+        "@": "/home/khairul/Downloads/react-admin-panel/src"
+      }
+    },
+    "server": {
+      "port": 3000
+    }
+  }
+}
