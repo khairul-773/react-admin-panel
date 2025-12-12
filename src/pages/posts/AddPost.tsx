@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@/store/hooks';
 import { addPost } from '@/store/slices/postsSlice';
-import Button from '@/components/ui/Button';
 import PageSubmenu from '@/components/ui/PageSubmenu';
+import PageHeader from '@/components/ui/PageHeader';
+import FormField from '@/components/forms/FormField';
 import { postSubmenuItems } from '@/constants/submenuItems';
 
 interface PostFormData {
@@ -40,59 +41,53 @@ const AddPost = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
     <div className="p-6">
       <PageSubmenu items={postSubmenuItems} />
-      
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Add Post</h1>
+      <PageHeader title="Add Post" />
       
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2">
-              Title *
-            </label>
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#4361ee] bg-white text-gray-900"
-              placeholder="Enter post title"
-              required
-            />
-          </div>
+          <FormField
+            label="Title"
+            name="title"
+            type="text"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter post title"
+            required
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2">
-              Content *
-            </label>
-            <textarea
-              name="body"
-              value={formData.body}
-              onChange={handleChange}
-              rows={8}
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#4361ee] bg-white text-gray-900"
-              placeholder="Write your post content here..."
-              required
-            />
-          </div>
+          <FormField
+            label="Content"
+            name="body"
+            type="textarea"
+            value={formData.body}
+            onChange={handleChange}
+            placeholder="Write your post content here..."
+            rows={8}
+            required
+          />
 
           <div className="flex gap-3 pt-4">
-            <Button type="submit" disabled={loading}>
-              {loading ? 'Adding...' : 'Add Post'}
-            </Button>
-            <Button 
-              type="button" 
-              variant="secondary"
-              onClick={() => navigate('/posts/all')}
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-6 py-2 bg-[#4361ee] text-white rounded-lg hover:bg-[#3651de] transition-colors disabled:opacity-50"
             >
-              Cancel
-            </Button>
+              {loading ? 'Adding...' : 'Add Post'}
+            </button>
+            <button
+              type="button"
+              onClick={() => setFormData({ title: '', body: '', userId: 1 })}
+              className="px-6 py-2 bg-white border border-gray-300 text-gray-900 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Reset
+            </button>
           </div>
         </form>
       </div>
