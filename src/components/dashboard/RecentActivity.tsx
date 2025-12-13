@@ -105,7 +105,7 @@ const RecentActivity: React.FC = () => {
         ))}
       </div>
       
-      <button className="mt-4 w-full text-center text-sm font-medium text-indigo-600 hover:text-indigo-700 py-2 border-t border-gray-200">
+      <button className="mt-4 w-full text-center text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 py-2 border-t border-gray-200 rounded-md">
         View All Activities
       </button>
     </div>
