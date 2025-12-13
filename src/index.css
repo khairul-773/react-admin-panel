@@ -141,3 +141,90 @@ th, td {
 th {
   @apply bg-gray-50 text-gray-900;
 }
+
+/* React Toastify Custom Styles */
+.Toastify__toast {
+  @apply rounded-lg shadow-lg font-sans;
+  padding: 16px 20px;
+  min-height: auto;
+  border: none;
+  color: #ffffff !important;
+}
+
+.Toastify__toast--success {
+  background-color: #4f46e5; /* indigo-600 */
+  color: #ffffff !important;
+}
+
+.Toastify__toast--success .Toastify__toast-icon svg {
+  fill: #ffffff;
+}
+
+.Toastify__toast--error {
+  background-color: #dc2626; /* red-600 */
+  color: #ffffff !important;
+}
+
+.Toastify__toast--error .Toastify__toast-icon svg {
+  fill: #ffffff;
+}
+
+.Toastify__toast--info {
+  background-color: #3b82f6; /* blue-500 */
+  color: #ffffff !important;
+}
+
+.Toastify__toast--info .Toastify__toast-icon svg {
+  fill: #ffffff;
+}
+
+.Toastify__toast--warning {
+  background-color: #f59e0b; /* amber-500 */
+  color: #ffffff !important;
+}
+
+.Toastify__toast--warning .Toastify__toast-icon svg {
+  fill: #ffffff;
+}
+
+.Toastify__toast-body {
+  color: #ffffff !important;
+  padding: 0;
+  line-height: 1.5;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.Toastify__toast-body > div {
+  color: #ffffff !important;
+}
+
+.Toastify__progress-bar {
+  height: 3px;
+}
+
+.Toastify__progress-bar--success {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.Toastify__progress-bar--error {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.Toastify__progress-bar--info {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.Toastify__progress-bar--warning {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.Toastify__close-button {
+  @apply text-white opacity-70 hover:opacity-100;
+}
+
+.Toastify__close-button > svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
