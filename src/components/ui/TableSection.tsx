@@ -13,7 +13,7 @@ const TableSection = ({
   title, 
   description, 
   buttonText, 
-  buttonPath, 
+  // buttonPath, 
   onButtonClick,
   children 
 }: TableSectionProps) => {

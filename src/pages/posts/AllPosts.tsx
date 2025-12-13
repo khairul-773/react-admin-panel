@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchPosts, removePost, editPost } from '@/store/slices/postsSlice';
 import Modal from '@/components/ui/Modal';
 import PageSubmenu from '@/components/ui/PageSubmenu';
-import PageHeader from '@/components/ui/PageHeader';
 import Table, { type Column } from '@/components/ui/Table';
 import FormInput from '@/components/forms/FormInput';
 import { postSchema, type PostFormInputs } from '@/schemas/validationSchemas';

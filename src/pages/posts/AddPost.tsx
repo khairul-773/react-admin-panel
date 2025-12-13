@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@/store/hooks';
 import { addPost } from '@/store/slices/postsSlice';
 import PageSubmenu from '@/components/ui/PageSubmenu';
-import PageHeader from '@/components/ui/PageHeader';
 import FormInput from '@/components/forms/FormInput';
 import { postSchema, type PostFormInputs } from '@/schemas/validationSchemas';
 import { postSubmenuItems } from '@/constants/submenuItems';

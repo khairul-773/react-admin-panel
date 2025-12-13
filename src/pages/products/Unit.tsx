@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addUnit, deleteUnit } from '@/store/slices/productsSlice';
+import type { Unit } from '@/types';
 import PageSubmenu from '@/components/ui/PageSubmenu';
 import Table, { type Column } from '@/components/ui/Table';
 import Modal from '@/components/ui/Modal';
@@ -34,7 +35,7 @@ const Unit = () => {
     }
   };
 
-  const columns: Column<{ id: number; name: string; shortName: string }>[] = [
+  const columns: Column<Unit>[] = [
     { header: 'ID', accessor: 'id' },
     { header: 'Name', accessor: 'name', className: 'font-semibold text-gray-900 group-hover:text-white' },
     { header: 'Short Name', accessor: 'shortName', className: 'text-gray-700 group-hover:text-white' },

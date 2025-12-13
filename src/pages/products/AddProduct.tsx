@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addProduct } from '@/store/slices/productsSlice';
 import PageSubmenu from '@/components/ui/PageSubmenu';
-import PageHeader from '@/components/ui/PageHeader';
 import FormInput from '@/components/forms/FormInput';
 import { productSchema, type ProductFormInputs } from '@/schemas/validationSchemas';
 import { productSubmenuItems } from '@/constants/submenuItems';
@@ -40,6 +39,7 @@ const AddProduct = () => {
       barcode: data.barcode || '',
       price: parseFloat(data.price),
       stock: parseInt(data.stock),
+      createdAt: new Date().toISOString(),
     };
     dispatch(addProduct(newProduct));
     form.reset();

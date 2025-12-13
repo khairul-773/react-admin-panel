@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '@/context/AuthContext';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import Layout from '@/components/layout/Layout';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -16,8 +17,19 @@ import Barcode from '@/pages/products/Barcode';
 import AddPost from '@/pages/posts/AddPost';
 import AllPosts from '@/pages/posts/AllPosts';
 
-// Define all protected routes dynamically
-const protectedRoutes = [
+/**
+ * Route configuration interface
+ */
+interface RouteConfig {
+  path: string;
+  component: React.ComponentType;
+}
+
+/**
+ * Protected routes configuration
+ * Centralized route definitions for better maintainability
+ */
+const protectedRoutes: RouteConfig[] = [
   { path: '/dashboard', component: Dashboard },
   { path: '/users', component: Users },
   { path: '/posts/add', component: AddPost },
@@ -30,50 +42,58 @@ const protectedRoutes = [
   { path: '/products/barcode', component: Barcode },
 ];
 
+/**
+ * Main App Component
+ * Sets up routing and global providers
+ */
 const App = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          
-          {/* Dynamic Protected Routes */}
-          {protectedRoutes.map(({ path, component: Component }) => (
+    <ErrorBoundary>
+      <AuthProvider>
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            
+            {/* Protected Routes */}
+            {protectedRoutes.map(({ path, component: Component }) => (
+              <Route
+                key={path}
+                path={path}
+                element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <Component />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+            ))}
+
+            {/* Default redirect */}
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            
+            {/* 404 Not Found */}
             <Route
-              key={path}
-              path={path}
+              path="*"
               element={
                 <ProtectedRoute>
                   <Layout>
-                    <Component />
+                    <NotFound />
                   </Layout>
                 </ProtectedRoute>
               }
             />
-          ))}
-
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          
-          {/* 404 Not Found */}
-          <Route
-            path="*"
-            element={
-              <ProtectedRoute>
-                <Layout>
-                  <NotFound />
-                </Layout>
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 };
 

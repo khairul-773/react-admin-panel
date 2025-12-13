@@ -6,7 +6,6 @@ import { deleteProduct, updateProduct, fetchProducts } from '@/store/slices/prod
 import type { Product } from '@/types';
 import Modal from '@/components/ui/Modal';
 import PageSubmenu from '@/components/ui/PageSubmenu';
-import PageHeader from '@/components/ui/PageHeader';
 import Table, { type Column } from '@/components/ui/Table';
 import FormInput from '@/components/forms/FormInput';
 import { productSchema, type ProductFormInputs } from '@/schemas/validationSchemas';

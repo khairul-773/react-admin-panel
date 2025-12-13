@@ -1,16 +1,10 @@
 import { useState } from 'react';
+import type { BarcodeItem } from '@/types';
 import PageSubmenu from '@/components/ui/PageSubmenu';
 import Table, { type Column } from '@/components/ui/Table';
 import Modal from '@/components/ui/Modal';
 import { productSubmenuItems } from '@/constants/submenuItems';
 import { MdAdd } from 'react-icons/md';
-
-interface BarcodeItem {
-  id: number;
-  productName: string;
-  barcode: string;
-  generatedDate: string;
-}
 
 const Barcode = () => {
   const [barcodes, setBarcodes] = useState<BarcodeItem[]>([
@@ -30,7 +24,7 @@ const Barcode = () => {
     const newBarcode: BarcodeItem = {
       id: barcodes.length + 1,
       ...formData,
-      generatedDate: new Date().toISOString().split('T')[0],
+      generatedDate: new Date().toISOString().split('T')[0] ?? '',
     };
     setBarcodes([...barcodes, newBarcode]);
     setFormData({ productName: '', barcode: '' });

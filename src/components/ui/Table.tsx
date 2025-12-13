@@ -124,8 +124,9 @@ function Table<T extends { id: number }>({
       const existingIndex = sortConfig.findIndex(s => s.key === key);
       if (existingIndex >= 0) {
         const newConfig = [...sortConfig];
-        if (newConfig[existingIndex].direction === 'asc') {
-          newConfig[existingIndex].direction = 'desc';
+        const existingSort = newConfig[existingIndex];
+        if (existingSort && existingSort.direction === 'asc') {
+          existingSort.direction = 'desc';
         } else {
           newConfig.splice(existingIndex, 1);
         }
@@ -168,6 +169,8 @@ function Table<T extends { id: number }>({
     if (sortIndex === -1) return null;
     
     const sort = sortConfig[sortIndex];
+    if (!sort) return null;
+    
     return (
       <span className="inline-flex items-center gap-1 text-indigo-600">
         {sort.direction === 'asc' ? '↑' : '↓'}
@@ -298,7 +301,7 @@ function Table<T extends { id: number }>({
                 </th>
               ))}
               {(onEdit || onDelete) && (
-                <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider w-1 whitespace-nowrap">
                   Actions
                 </th>
               )}
@@ -327,7 +330,7 @@ function Table<T extends { id: number }>({
                   );
                 })}
                 {(onEdit || onDelete) && (
-                  <td className="px-2 sm:px-3 py-2 text-right text-sm">
+                  <td className="px-2 sm:px-3 py-2 text-right text-sm w-1 whitespace-nowrap">
                     {onEdit && (
                       <button
                         onClick={() => onEdit(item)}

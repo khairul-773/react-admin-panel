@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addBrand, deleteBrand } from '@/store/slices/productsSlice';
+import type { Brand } from '@/types';
 import PageSubmenu from '@/components/ui/PageSubmenu';
 import Table, { type Column } from '@/components/ui/Table';
 import Modal from '@/components/ui/Modal';
@@ -34,7 +35,7 @@ const Brand = () => {
     }
   };
 
-  const columns: Column<{ id: number; name: string; description: string }>[] = [
+  const columns: Column<Brand>[] = [
     { header: 'ID', accessor: 'id' },
     { header: 'Name', accessor: 'name', className: 'font-semibold text-gray-900 group-hover:text-white' },
     { header: 'Description', accessor: 'description', className: 'text-gray-700 group-hover:text-white' },

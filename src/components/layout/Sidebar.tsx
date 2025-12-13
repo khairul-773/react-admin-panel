@@ -51,11 +51,10 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
   // Auto-open menu if any of its submenu items are active
   useEffect(() => {
     const newOpenMenus: { [key: string]: boolean } = {};
-    menuItems.forEach((item, index) => {
+    menuItems.forEach((item) => {
       if (item.submenu) {
         const isActive = item.submenu.some((subItem: any) => location.pathname === subItem.path);
         newOpenMenus[item.label] = isActive;
-
       }
     });
     setOpenMenus(newOpenMenus);

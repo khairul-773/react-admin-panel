@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { Product } from '@/types';
 import { fetchData } from '@/services/api';
+import { API_ENDPOINTS, DEFAULT_BRANDS, DEFAULT_CATEGORIES } from '@/constants';
 
 interface ProductsState {
   products: Product[];
@@ -11,33 +12,42 @@ interface ProductsState {
   error: string | null;
 }
 
-// Async thunk to fetch products from JSONPlaceholder
-export const fetchProducts = createAsyncThunk(
+interface Photo {
+  id: number;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+  albumId: number;
+}
+
+/**
+ * Async thunk to fetch products from API
+ * Transforms photo data into product format
+ */
+export const fetchProducts = createAsyncThunk<Product[]>(
   'products/fetchProducts',
   async () => {
-    const photos = await fetchData('photos', 500);
+    const photos = await fetchData<Photo[]>(API_ENDPOINTS.PHOTOS, 500);
     
-    const categories = ['Electronics', 'Clothing', 'Food', 'Books', 'Sports', 'Toys'];
-    const brands = ['Samsung', 'Nike', 'Sony', 'Apple', 'Adidas', 'Dell', 'HP', 'Canon', 'LG', 'Puma'];
+    const categories = [...DEFAULT_CATEGORIES];
+    const brands = [...DEFAULT_BRANDS];
     
     // Transform photos data into products format
-    const products: Product[] = photos.map((photo: any) => {
+    const products: Product[] = photos.map((photo) => {
       const daysAgo = photo.id % 365;
       const createdDate = new Date();
       createdDate.setDate(createdDate.getDate() - daysAgo);
-      const updatedDate = new Date();
-      updatedDate.setDate(updatedDate.getDate() - Math.floor(daysAgo / 2));
       
       return {
         id: photo.id,
-        name: photo.title.split(' ').slice(0, 3).join(' '), // First 3 words as product name
-        category: categories[photo.id % categories.length],
-        brand: brands[photo.id % brands.length],
+        name: photo.title.split(' ').slice(0, 3).join(' '),
+        category: categories[photo.id % categories.length] || 'General',
+        brand: brands[photo.id % brands.length] || 'Generic',
         unit: 'pcs',
         barcode: `BAR${photo.id.toString().padStart(6, '0')}`,
         price: Math.floor(Math.random() * 50000) + 500,
         stock: Math.floor(Math.random() * 100) + 1,
-        createdAt: createdDate.toISOString().split('T')[0],
+        createdAt: createdDate.toISOString().split('T')[0] ?? new Date().toISOString().split('T')[0] ?? '',
       };
     });
     

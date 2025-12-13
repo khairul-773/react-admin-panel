@@ -7,7 +7,15 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    
+    /* Strict Type-Checking Options */
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -20,20 +28,5 @@
     }
   },
   "include": ["src"],
-  "vite": {
-    "plugins": [
-      {
-        "name": "vite-plugin-react",
-        "options": {}
-      }
-    ],
-    "resolve": {
-      "alias": {
-        "@": "/home/khairul/Downloads/react-admin-panel/src"
-      }
-    },
-    "server": {
-      "port": 3000
-    }
-  }
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

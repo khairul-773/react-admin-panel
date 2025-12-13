@@ -67,7 +67,7 @@ function TableFilters<T>({
                   <div className="flex items-center gap-2">
                     <DatePicker
                       selected={dateFilters[fieldKey]?.start ? new Date(dateFilters[fieldKey].start) : null}
-                      onChange={(date) => onDateFilterChange(fieldKey, 'start', date ? date.toISOString().split('T')[0] : '')}
+                      onChange={(date) => onDateFilterChange(fieldKey, 'start', date?.toISOString().split('T')[0] ?? '')}
                       selectsStart
                       startDate={dateFilters[fieldKey]?.start ? new Date(dateFilters[fieldKey].start) : undefined}
                       endDate={dateFilters[fieldKey]?.end ? new Date(dateFilters[fieldKey].end) : undefined}
@@ -78,7 +78,7 @@ function TableFilters<T>({
                     <span className="text-gray-400 text-xs">—</span>
                     <DatePicker
                       selected={dateFilters[fieldKey]?.end ? new Date(dateFilters[fieldKey].end) : null}
-                      onChange={(date) => onDateFilterChange(fieldKey, 'end', date ? date.toISOString().split('T')[0] : '')}
+                      onChange={(date) => onDateFilterChange(fieldKey, 'end', date?.toISOString().split('T')[0] ?? '')}
                       selectsEnd
                       startDate={dateFilters[fieldKey]?.start ? new Date(dateFilters[fieldKey].start) : undefined}
                       endDate={dateFilters[fieldKey]?.end ? new Date(dateFilters[fieldKey].end) : undefined}

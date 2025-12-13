@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { MdSearch, MdNotifications, MdMenu } from 'react-icons/md';
 
@@ -71,7 +71,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
               <p className="text-xs text-gray-600 font-normal">Admin</p>
             </div>
             <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-semibold">
-              {user?.email?.[0].toUpperCase() || 'A'}
+              {user?.email?.charAt(0).toUpperCase() || 'A'}
             </div>
           </div>
         </div>

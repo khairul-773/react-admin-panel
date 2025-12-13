@@ -34,6 +34,31 @@ export interface Product {
   createdAt: string;
 }
 
+export interface Category {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface Brand {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface Unit {
+  id: number;
+  name: string;
+  shortName: string;
+}
+
+export interface BarcodeItem {
+  id: number;
+  productName: string;
+  barcode: string;
+  generatedDate: string;
+}
+
 export interface ApiResponse<T> {
   data: T;
   status: number;

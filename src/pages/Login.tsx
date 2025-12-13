@@ -3,10 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import AuthForm from '../components/auth/AuthForm';
 import { useAuth } from '../context/AuthContext';
 
-interface AuthFormProps {
-    onSubmit: (email: string, password: string) => Promise<void>;
-}
-
 const Login: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const { login } = useAuth();

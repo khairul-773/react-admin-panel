@@ -2,16 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthForm from '../components/auth/AuthForm';
 
-interface AuthFormProps {
-    isLogin: boolean;
-    onSubmit: (email: string, password: string) => Promise<void>;
-}
-
 const Register: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
-    const handleRegister = async (email: string, password: string) => {
+    const handleRegister = async (_email: string, _password: string) => {
         try {
             // Here you would typically send a request to your backend API to register the user
             // For example:
