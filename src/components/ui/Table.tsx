@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { MdChevronLeft, MdChevronRight, MdSearch, MdFilterList, MdSwapVert, MdCalendarToday, MdClose } from 'react-icons/md';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { MdChevronLeft, MdChevronRight, MdSearch, MdSwapVert, MdCalendarToday } from 'react-icons/md';
+import TableFilters from './TableFilters';
 
 interface Column<T> {
   header: string;
@@ -208,117 +207,59 @@ function Table<T extends { id: number }>({
 
   return (
     <>
-      {/* Search and Filter Controls */}
-      {(enableSearch || enableDateFilter) && (
-        <div className="p-3 sm:p-4 md:p-6 pb-0">
-          {/* Search and Date Filter Bar */}
-          <div className="flex flex-col lg:flex-row gap-3 items-stretch">
-            {/* Search Bar */}
-            {enableSearch && (
-              <div className="relative flex-1">
-                <MdSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
-                <input
-                  type="text"
-                  placeholder="Search across all columns..."
-                  value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                    setCurrentPage(1);
-                  }}
-                  className="w-full h-[46px] pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm shadow-sm"
-                />
-              </div>
-            )}
-            
-            {/* Date Range Filter */}
-            {enableDateFilter && dateColumns.length > 0 && (
-              <div className="flex flex-col sm:flex-row gap-2 lg:flex-shrink-0">
-                {dateColumns.map((column) => {
-                  const columnDef = columns.find(c => c.accessor === column);
-                  const fieldKey = String(column);
-                  return (
-                    <div key={fieldKey} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 h-[46px]">
-                      <div className="flex items-center gap-2 text-xs font-semibold text-gray-700 whitespace-nowrap">
-                        <MdCalendarToday className="text-indigo-600" />
-                        <span>{columnDef?.header || String(column)}:</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <DatePicker
-                          selected={dateFilters[fieldKey]?.start ? new Date(dateFilters[fieldKey].start) : null}
-                          onChange={(date) => handleDateFilterChange(fieldKey, 'start', date ? date.toISOString().split('T')[0] : '')}
-                          selectsStart
-                          startDate={dateFilters[fieldKey]?.start ? new Date(dateFilters[fieldKey].start) : undefined}
-                          endDate={dateFilters[fieldKey]?.end ? new Date(dateFilters[fieldKey].end) : undefined}
-                          placeholderText="From"
-                          dateFormat="dd/MM/yyyy"
-                          className="w-28 px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                        />
-                        <span className="text-gray-400 text-xs">—</span>
-                        <DatePicker
-                          selected={dateFilters[fieldKey]?.end ? new Date(dateFilters[fieldKey].end) : null}
-                          onChange={(date) => handleDateFilterChange(fieldKey, 'end', date ? date.toISOString().split('T')[0] : '')}
-                          selectsEnd
-                          startDate={dateFilters[fieldKey]?.start ? new Date(dateFilters[fieldKey].start) : undefined}
-                          endDate={dateFilters[fieldKey]?.end ? new Date(dateFilters[fieldKey].end) : undefined}
-                          minDate={dateFilters[fieldKey]?.start ? new Date(dateFilters[fieldKey].start) : undefined}
-                          placeholderText="To"
-                          dateFormat="dd/MM/yyyy"
-                          className="w-28 px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                        />
-                        {(dateFilters[fieldKey]?.start || dateFilters[fieldKey]?.end) && (
-                          <button
-                            onClick={() => {
-                              setDateFilters(prev => {
-                                const newFilters = { ...prev };
-                                delete newFilters[fieldKey];
-                                return newFilters;
-                              });
-                              setCurrentPage(1);
-                            }}
-                            className="p-1 text-gray-400 hover:text-red-500 transition-colors"
-                            title="Clear date filter"
-                          >
-                            <MdClose className="text-sm" />
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+      {/* Search and Filter Controls using TableFilters component */}
+      <TableFilters
+        enableSearch={enableSearch}
+        searchTerm={searchTerm}
+        onSearchChange={(value) => {
+          setSearchTerm(value);
+          setCurrentPage(1);
+        }}
+        enableDateFilter={enableDateFilter}
+        dateColumns={dateColumns}
+        dateFilters={dateFilters}
+        onDateFilterChange={handleDateFilterChange}
+        onClearDateFilter={(field) => {
+          setDateFilters(prev => {
+            const newFilters = { ...prev };
+            delete newFilters[field];
+            return newFilters;
+          });
+          setCurrentPage(1);
+        }}
+        columns={columns}
+      />
 
-          {/* Active Filters & Clear Button */}
-          {(searchTerm || Object.keys(dateFilters).length > 0 || sortConfig.length > 0) && (
-            <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-gray-200">
-              <span className="text-xs font-medium text-gray-600">Active:</span>
-              {searchTerm && (
-                <span className="inline-flex items-center gap-1 px-2 py-1 bg-indigo-100 text-indigo-700 text-xs rounded-md font-medium">
-                  <MdSearch className="text-xs" />
-                  "{searchTerm}"
-                </span>
-              )}
-              {sortConfig.length > 0 && (
-                <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs rounded-md font-medium">
-                  <MdSwapVert className="text-xs" />
-                  {sortConfig.length} sort{sortConfig.length > 1 ? 's' : ''}
-                </span>
-              )}
-              {Object.keys(dateFilters).length > 0 && (
-                <span className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-md font-medium">
-                  <MdCalendarToday className="text-xs" />
-                  {Object.keys(dateFilters).length} date filter{Object.keys(dateFilters).length > 1 ? 's' : ''}
-                </span>
-              )}
-              <button
-                onClick={clearFilters}
-                className="ml-auto px-3 py-1 text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 transition-colors"
-              >
-                Clear All
-              </button>
-            </div>
-          )}
+      {/* Active Filters & Clear Button */}
+      {(searchTerm || Object.keys(dateFilters).length > 0 || sortConfig.length > 0) && (
+        <div className="px-3 sm:p-4 md:px-6 pb-0">
+          <div className="flex flex-wrap items-center gap-2 pb-3 border-b border-gray-200">
+            <span className="text-xs font-medium text-gray-600">Active:</span>
+            {searchTerm && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-indigo-100 text-indigo-700 text-xs rounded-md font-medium">
+                <MdSearch className="text-xs" />
+                "{searchTerm}"
+              </span>
+            )}
+            {sortConfig.length > 0 && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs rounded-md font-medium">
+                <MdSwapVert className="text-xs" />
+                {sortConfig.length} sort{sortConfig.length > 1 ? 's' : ''}
+              </span>
+            )}
+            {Object.keys(dateFilters).length > 0 && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-md font-medium">
+                <MdCalendarToday className="text-xs" />
+                {Object.keys(dateFilters).length} date filter{Object.keys(dateFilters).length > 1 ? 's' : ''}
+              </span>
+            )}
+            <button
+              onClick={clearFilters}
+              className="ml-auto px-3 py-1 text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 transition-colors"
+            >
+              Clear All
+            </button>
+          </div>
         </div>
       )}
 
@@ -345,7 +286,7 @@ function Table<T extends { id: number }>({
                       handleSort(column.accessor, e.shiftKey);
                     }
                   }}
-                  className={`px-2 sm:px-3 py-2 text-left text-[10px] sm:text-xs font-semibold text-gray-700 uppercase tracking-wide ${
+                  className={`px-2 sm:px-3 py-2 text-left text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide ${
                     typeof column.accessor !== 'function' && enableSort ? 'cursor-pointer hover:bg-gray-100 select-none transition-colors' : ''
                   }`}
                   title={enableSort && typeof column.accessor !== 'function' ? 'Click to sort, Shift+Click for multi-sort' : ''}
@@ -377,7 +318,7 @@ function Table<T extends { id: number }>({
                   return (
                     <td
                       key={colIndex}
-                      className={`px-2 sm:px-3 py-2 text-xs ${
+                      className={`px-2 sm:px-3 py-2 text-sm ${
                         column.className || 'text-gray-900 group-hover:text-white'
                       }`}
                     >
@@ -386,11 +327,11 @@ function Table<T extends { id: number }>({
                   );
                 })}
                 {(onEdit || onDelete) && (
-                  <td className="px-2 sm:px-3 py-2 text-right text-xs">
+                  <td className="px-2 sm:px-3 py-2 text-right text-sm">
                     {onEdit && (
                       <button
                         onClick={() => onEdit(item)}
-                        className="text-white bg-indigo-600 hover:bg-indigo-500 font-semibold mr-1.5 px-2 py-1 rounded text-xs tracking-wide"
+                        className="text-white bg-indigo-600 hover:bg-indigo-500 font-semibold mr-1.5 px-2 py-1 rounded text-sm tracking-wide"
                       >
                         Edit
                       </button>
@@ -398,7 +339,7 @@ function Table<T extends { id: number }>({
                     {onDelete && (
                       <button
                         onClick={() => handleDelete(item)}
-                        className="text-white font-semibold bg-red-600 group-hover:bg-red-700 hover:bg-red-700 px-2 py-1 rounded text-xs tracking-wide"
+                        className="text-white font-semibold bg-red-600 group-hover:bg-red-700 hover:bg-red-700 px-2 py-1 rounded text-sm tracking-wide"
                       >
                         Delete
                       </button>
@@ -421,7 +362,7 @@ function Table<T extends { id: number }>({
       {filteredAndSortedData.length > 0 && totalPages > 1 && (
         <div className="px-3 sm:px-4 md:px-6 py-4 sm:py-5 border-t border-gray-200 bg-white">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-            <div className="text-xs sm:text-sm text-gray-600 font-normal text-center sm:text-left">
+            <div className="text-sm sm:text-base text-gray-600 font-medium text-center sm:text-left">
               Showing <span className="font-semibold text-gray-900">{startIndex + 1}</span> to{' '}
               <span className="font-semibold text-gray-900">{Math.min(endIndex, filteredAndSortedData.length)}</span> of{' '}
               <span className="font-semibold text-gray-900">{filteredAndSortedData.length}</span> results
@@ -431,20 +372,20 @@ function Table<T extends { id: number }>({
               <button
                 onClick={() => goToPage(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all"
+                className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all"
                 aria-label="Previous page"
               >
-                <MdChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                <MdChevronLeft className="w-5 h-5" />
               </button>
               
               {getPageNumbers().map((page, index) => (
                 page === '...' ? (
-                  <span key={`ellipsis-${index}`} className="hidden sm:inline-flex items-center justify-center w-10 h-10 text-gray-400">...</span>
+                  <span key={`ellipsis-${index}`} className="hidden sm:inline-flex items-center justify-center w-10 h-10 text-gray-500 font-medium text-base">...</span>
                 ) : (
                   <button
                     key={page}
                     onClick={() => goToPage(page as number)}
-                    className={`inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-md border font-semibold transition-all text-xs sm:text-sm ${
+                    className={`inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-md border font-semibold transition-all text-sm ${
                       currentPage === page
                         ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm hover:bg-indigo-700'
                         : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
@@ -460,10 +401,10 @@ function Table<T extends { id: number }>({
               <button
                 onClick={() => goToPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all"
+                className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all"
                 aria-label="Next page"
               >
-                <MdChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                <MdChevronRight className="w-5 h-5" />
               </button>
             </div>
           </div>

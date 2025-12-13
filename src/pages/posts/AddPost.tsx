@@ -34,11 +34,11 @@ const AddPost = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="mt-2">
       <PageSubmenu items={postSubmenuItems} />
       
       {/* Main Card with Header and Form */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="mt-3 bg-white rounded-lg border border-gray-200 overflow-hidden">
         {/* Header Section */}
         <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
           <h1 className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight">Add Post</h1>

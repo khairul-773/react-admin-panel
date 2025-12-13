@@ -11,7 +11,7 @@ const Dashboard: React.FC = () => {
     ];
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="mt-2 space-y-3">
             {/* Page Header */}
             <div>
                 <h1 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">Dashboard</h1>

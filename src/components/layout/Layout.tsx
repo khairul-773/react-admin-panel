@@ -39,13 +39,11 @@ const Layout = ({ children }: LayoutProps) => {
       
       <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} isMobile={isMobile} />
       <div className={`transition-all duration-300 flex flex-col min-h-screen ${
-        sidebarOpen && !isMobile ? 'md:ml-64' : 'md:ml-20'
+        sidebarOpen && !isMobile ? 'md:ml-56' : 'md:ml-16'
       }`}>
         <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
-        <main className="flex-1 p-3 sm:p-4 md:p-6 bg-gray-50">
-          <div className="max-w-7xl mx-auto">
-            {children}
-          </div>
+        <main className="flex-1 p-2 sm:p-2 md:p-3 bg-gray-50">
+          {children}
         </main>
         <Footer />
       </div>

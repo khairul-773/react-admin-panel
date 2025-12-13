@@ -108,10 +108,10 @@ const AllProducts = () => {
   }
 
   return (
-    <div className="p-3 sm:p-4 md:p-6">
+    <div>
       <PageSubmenu items={productSubmenuItems} />
       
-      <div className="mt-4 sm:mt-6 bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="mt-2 bg-white rounded-lg border border-gray-200 overflow-hidden">
         <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 bg-gray-50">
           <h1 className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight">All Products</h1>
           <p className="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed">Manage all your products</p>

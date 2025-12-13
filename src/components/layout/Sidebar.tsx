@@ -76,11 +76,11 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
   return (
     <aside className={`fixed left-0 top-0 h-screen bg-white border-r border-gray-200 flex flex-col z-50 transition-all duration-300 ${
       isMobile 
-        ? isOpen ? 'w-64 translate-x-0' : 'w-64 -translate-x-full'
-        : isOpen ? 'w-64' : 'w-20'
+        ? isOpen ? 'w-56 translate-x-0' : 'w-56 -translate-x-full'
+        : isOpen ? 'w-56' : 'w-16'
     }`}>
-      <div className="px-3 sm:px-6 py-3 border-b border-gray-200 min-h-[73px] flex items-center justify-between">
-        {isOpen && <h1 className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight truncate">Admin Panel</h1>}
+      <div className="px-3 sm:px-4 py-3 border-b border-gray-200 min-h-[73px] flex items-center justify-between">
+        {isOpen && <h1 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight truncate">Admin Panel</h1>}
         {!isMobile && (
           <button
             onClick={onToggle}
@@ -95,8 +95,8 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
         )}
       </div>
 
-      <nav className="flex-1 p-4 overflow-y-auto">
-        <ul className="space-y-2">
+      <nav className="flex-1 p-3 overflow-y-auto">
+        <ul className="space-y-1">
           {menuItems.map((item, index) => (
             <li key={item.path || item.label || `menu-${index}`}>
               {item.submenu ? (
@@ -104,7 +104,7 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
                 <>
                   <a
                     onClick={() => isOpen && toggleMenu(item.label)}
-                    className={`flex items-center ${isOpen ? 'gap-3' : 'justify-center'} px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+                    className={`flex items-center ${isOpen ? 'gap-2' : 'justify-center'} px-2 py-2 rounded-md text-xs sm:text-sm font-medium tracking-wide transition-colors cursor-pointer ${
                       isMenuActive(item)
                         ? 'bg-indigo-600 text-white hover:bg-indigo-700 hover:text-white'
                         : 'text-gray-900 hover:bg-indigo-600 hover:text-white'
@@ -123,13 +123,13 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
 
                   {/* Submenu */}
                   {isOpen && openMenus[item.label] && (
-                    <ul className="mt-2 ml-6 space-y-1 border-l-2 border-gray-200 pl-3">
+                    <ul className="mt-1 ml-4 space-y-1 border-l-2 border-gray-200 pl-2">
                       {item.submenu.map((subItem) => (
                         <li key={subItem.path}>
                           <NavLink
                             to={subItem.path}
                             className={({ isActive }) =>
-                              `flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                              `flex items-center gap-2 px-2 py-2 rounded-md text-xs sm:text-sm font-medium tracking-wide transition-colors ${
                                 isActive
                                   ? 'bg-indigo-600 text-white hover:bg-indigo-700 hover:text-white'
                                   : 'text-gray-900 hover:bg-indigo-600 hover:text-white'
@@ -149,7 +149,7 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
                 <NavLink
                   to={item.path!}
                   className={({ isActive }) =>
-                    `flex items-center ${isOpen ? 'gap-3' : 'justify-center'} px-3 py-2 rounded-md font-medium transition-colors ${
+                    `flex items-center ${isOpen ? 'gap-2' : 'justify-center'} px-2 py-2 rounded-md text-xs sm:text-sm font-medium tracking-wide transition-colors ${
                       isActive
                         ? 'bg-indigo-600 text-white hover:bg-indigo-700 hover:text-white'
                         : 'text-gray-900 hover:bg-indigo-600 hover:text-white'
@@ -165,10 +165,10 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
         </ul>
       </nav>
 
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-3 border-t border-gray-200">
         <button
           onClick={handleLogout}
-          className={`w-full px-3 py-2 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold tracking-wide transition-colors ${isOpen ? 'text-left' : 'text-center'}`}
+          className={`w-full px-2 py-2 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold tracking-wide transition-colors ${isOpen ? 'text-left' : 'text-center'}`}
         >
           {isOpen ? 'Logout' : '⎋'}
         </button>

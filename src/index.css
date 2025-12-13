@@ -7,35 +7,52 @@
 @layer base {
   body {
     @apply bg-white text-gray-900 antialiased;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'case';
+    font-optical-sizing: auto;
   }
 
   h1 {
-    @apply text-xl sm:text-2xl font-bold text-gray-900 tracking-tight;
+    @apply text-lg sm:text-xl font-bold text-gray-900 tracking-tight leading-tight;
   }
 
   h2 {
-    @apply text-lg sm:text-xl font-bold text-gray-900 tracking-tight;
+    @apply text-base sm:text-lg font-bold text-gray-900 tracking-tight leading-tight;
   }
 
   h3 {
-    @apply text-base sm:text-lg font-semibold text-gray-900 tracking-tight;
+    @apply text-sm sm:text-base font-semibold text-gray-900 tracking-tight leading-snug;
   }
 
   h4 {
-    @apply text-lg sm:text-xl font-semibold text-gray-900;
+    @apply text-sm sm:text-base font-semibold text-gray-900 tracking-wide leading-snug;
   }
 
   h5 {
-    @apply text-base sm:text-lg font-semibold text-gray-900;
+    @apply text-xs sm:text-sm font-semibold text-gray-900 tracking-wide leading-snug;
   }
 
   h6 {
-    @apply text-sm sm:text-base font-semibold text-gray-900;
+    @apply text-xs font-semibold text-gray-700 tracking-wider uppercase leading-snug;
   }
 
   p {
-    @apply text-base leading-relaxed;
+    @apply text-sm leading-relaxed font-normal;
+  }
+
+  a {
+    @apply font-medium transition-colors;
+  }
+
+  button {
+    @apply font-medium transition-all;
+  }
+
+  input, textarea, select {
+    @apply text-sm font-normal;
+  }
+
+  label {
+    @apply text-xs font-medium text-gray-700 tracking-wide;
   }
 
   a {
