@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { deleteProduct, updateProduct } from '@/store/slices/productsSlice';
 import type { Product } from '@/types';
@@ -6,7 +8,8 @@ import Modal from '@/components/ui/Modal';
 import PageSubmenu from '@/components/ui/PageSubmenu';
 import PageHeader from '@/components/ui/PageHeader';
 import Table, { type Column } from '@/components/ui/Table';
-import ProductForm, { type ProductFormData } from '@/components/forms/ProductForm';
+import FormInput from '@/components/forms/FormInput';
+import { productSchema, type ProductFormInputs } from '@/schemas/validationSchemas';
 import { productSubmenuItems } from '@/constants/submenuItems';
 
 const AllProducts = () => {
@@ -18,14 +21,18 @@ const AllProducts = () => {
   
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
-  const [formData, setFormData] = useState<ProductFormData>({
-    name: '',
-    category: '',
-    brand: '',
-    unit: '',
-    barcode: '',
-    price: '',
-    stock: '',
+
+  const form = useForm<ProductFormInputs>({
+    resolver: zodResolver(productSchema),
+    defaultValues: {
+      name: '',
+      category: '',
+      brand: '',
+      unit: '',
+      barcode: '',
+      price: '',
+      stock: '',
+    },
   });
 
   const columns: Column<Product>[] = [
@@ -41,7 +48,7 @@ const AllProducts = () => {
 
   const handleEdit = (product: Product) => {
     setCurrentProduct(product);
-    setFormData({
+    form.reset({
       name: product.name,
       category: product.category,
       brand: product.brand,
@@ -53,19 +60,18 @@ const AllProducts = () => {
     setIsModalOpen(true);
   };
 
-  const handleUpdate = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleUpdate = (data: ProductFormInputs) => {
     if (!currentProduct) return;
     
     const updatedProduct: Product = {
       ...currentProduct,
-      name: formData.name,
-      category: formData.category,
-      brand: formData.brand,
-      unit: formData.unit,
-      barcode: formData.barcode,
-      price: parseFloat(formData.price),
-      stock: parseInt(formData.stock),
+      name: data.name,
+      category: data.category,
+      brand: data.brand || '',
+      unit: data.unit,
+      barcode: data.barcode || '',
+      price: parseFloat(data.price),
+      stock: parseInt(data.stock),
     };
     
     dispatch(updateProduct(updatedProduct));
@@ -101,18 +107,90 @@ const AllProducts = () => {
           onClose={() => {
             setIsModalOpen(false);
             setCurrentProduct(null);
+            form.reset();
           }}
           title="Edit Product"
         >
-          <ProductForm
-            formData={formData}
-            onFormDataChange={setFormData}
-            categories={categories}
-            brands={brands}
-            units={units}
-            onSubmit={handleUpdate}
-            submitButtonText="Update Product"
-          />
+          <form onSubmit={form.handleSubmit(handleUpdate)} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormInput
+                label="Product Name"
+                name="name"
+                type="text"
+                form={form}
+                required
+              />
+
+              <FormInput
+                label="Category"
+                name="category"
+                type="select"
+                options={categories.map(cat => ({ value: cat.name, label: cat.name }))}
+                form={form}
+                required
+              />
+
+              <FormInput
+                label="Brand"
+                name="brand"
+                type="select"
+                options={brands.map(brand => ({ value: brand.name, label: brand.name }))}
+                form={form}
+              />
+
+              <FormInput
+                label="Unit"
+                name="unit"
+                type="select"
+                options={units.map(unit => ({ value: unit.shortName, label: `${unit.name} (${unit.shortName})` }))}
+                form={form}
+                required
+              />
+
+              <FormInput
+                label="Barcode"
+                name="barcode"
+                type="text"
+                form={form}
+              />
+
+              <FormInput
+                label="Price"
+                name="price"
+                type="number"
+                form={form}
+                required
+              />
+
+              <FormInput
+                label="Stock Quantity"
+                name="stock"
+                type="number"
+                form={form}
+                required
+              />
+            </div>
+
+            <div className="flex gap-3 justify-end pt-4">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsModalOpen(false);
+                  setCurrentProduct(null);
+                  form.reset();
+                }}
+                className="px-4 py-2 border border-gray-200 text-gray-900 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-[#4361ee] text-white rounded-lg hover:bg-[#3651de] transition-colors"
+              >
+                Update Product
+              </button>
+            </div>
+          </form>
         </Modal>
       )}
     </div>

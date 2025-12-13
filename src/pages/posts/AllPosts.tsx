@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchPosts, removePost, editPost } from '@/store/slices/postsSlice';
 import Modal from '@/components/ui/Modal';
 import PageSubmenu from '@/components/ui/PageSubmenu';
 import PageHeader from '@/components/ui/PageHeader';
 import Table, { type Column } from '@/components/ui/Table';
-import FormField from '@/components/forms/FormField';
+import FormInput from '@/components/forms/FormInput';
+import { postSchema, type PostFormInputs } from '@/schemas/validationSchemas';
 import { postSubmenuItems } from '@/constants/submenuItems';
 import type { Post } from '@/types';
-
-interface PostFormData {
-  title: string;
-  body: string;
-  userId: number;
-}
 
 const AllPosts = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +18,11 @@ const AllPosts = () => {
   
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentPost, setCurrentPost] = useState<Post | null>(null);
-  const [formData, setFormData] = useState<PostFormData>({ title: '', body: '', userId: 1 });
+
+  const form = useForm<PostFormInputs>({
+    resolver: zodResolver(postSchema),
+    defaultValues: { title: '', body: '', userId: 1 },
+  });
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -39,7 +40,7 @@ const AllPosts = () => {
 
   const handleEdit = (post: Post): void => {
     setCurrentPost(post);
-    setFormData({ title: post.title, body: post.body, userId: post.userId });
+    form.reset({ title: post.title, body: post.body, userId: post.userId });
     setIsModalOpen(true);
   };
 
@@ -52,14 +53,13 @@ const AllPosts = () => {
     }
   };
 
-  const handleUpdate = async (e: React.FormEvent): Promise<void> => {
-    e.preventDefault();
+  const handleUpdate = async (data: PostFormInputs): Promise<void> => {
     if (!currentPost) return;
     
     try {
       await dispatch(editPost({ 
         id: currentPost.id, 
-        post: formData 
+        post: data 
       })).unwrap();
       setIsModalOpen(false);
       setCurrentPost(null);
@@ -67,10 +67,6 @@ const AllPosts = () => {
       console.error('Failed to update post:', error);
       alert('Failed to update post');
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   if (loading) {
@@ -113,26 +109,25 @@ const AllPosts = () => {
           onClose={() => {
             setIsModalOpen(false);
             setCurrentPost(null);
+            form.reset();
           }}
           title="Edit Post"
         >
-          <form onSubmit={handleUpdate} className="space-y-4">
-            <FormField
+          <form onSubmit={form.handleSubmit(handleUpdate)} className="space-y-4">
+            <FormInput
               label="Title"
               name="title"
               type="text"
-              value={formData.title}
-              onChange={handleChange}
+              form={form}
               required
             />
             
-            <FormField
+            <FormInput
               label="Content"
               name="body"
               type="textarea"
-              value={formData.body}
-              onChange={handleChange}
               rows={8}
+              form={form}
               required
             />
 
@@ -142,6 +137,7 @@ const AllPosts = () => {
                 onClick={() => {
                   setIsModalOpen(false);
                   setCurrentPost(null);
+                  form.reset();
                 }}
                 className="px-4 py-2 border border-gray-200 text-gray-900 rounded-lg hover:bg-gray-50 transition-colors"
               >

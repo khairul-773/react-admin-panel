@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import Input from '../ui/Input';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '../ui/Button';
-import { validateEmail, validatePassword } from '../../utils/validators';
+import FormInput from '../forms/FormInput';
+import { authSchema, type AuthFormInputs } from '@/schemas/validationSchemas';
 
 interface AuthFormProps {
   onSubmit: (email: string, password: string) => Promise<void>;
@@ -9,54 +10,52 @@ interface AuthFormProps {
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin = true }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const form = useForm<AuthFormInputs>({
+    resolver: zodResolver(authSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-
-    if (!validateEmail(email)) {
-      setError('Invalid email format');
-      return;
-    }
-
-    if (!validatePassword(password)) {
-      setError('Password must be at least 6 characters');
-      return;
-    }
-
+  const handleFormSubmit = async (data: AuthFormInputs) => {
     try {
-      setLoading(true);
-      await onSubmit(email, password);
+      await onSubmit(data.email, data.password);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
-    } finally {
-      setLoading(false);
+      form.setError('root', {
+        message: err instanceof Error ? err.message : 'An error occurred',
+      });
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {error && <div className="text-gray-900 bg-red-50 border border-red-200 rounded-md p-3 text-sm">{error}</div>}
-      <Input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+    <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-4">
+      {form.formState.errors.root && (
+        <div className="text-gray-900 bg-red-50 border border-red-200 rounded-md p-3 text-sm">
+          {form.formState.errors.root.message}
+        </div>
+      )}
+      
+      <FormInput
+        label="Email"
+        name="email"
+        type="text"
+        placeholder="Enter your email"
+        form={form}
         required
       />
-      <Input
+      
+      <FormInput
+        label="Password"
+        name="password"
         type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Enter your password"
+        form={form}
         required
       />
-      <Button type="submit" disabled={loading}>
-        {loading ? 'Loading...' : isLogin ? 'Login' : 'Register'}
+      
+      <Button type="submit" disabled={form.formState.isSubmitting}>
+        {form.formState.isSubmitting ? 'Loading...' : isLogin ? 'Login' : 'Register'}
       </Button>
     </form>
   );

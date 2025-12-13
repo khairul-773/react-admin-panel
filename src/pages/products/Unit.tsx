@@ -1,22 +1,25 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addUnit, deleteUnit } from '@/store/slices/productsSlice';
 import PageSubmenu from '@/components/ui/PageSubmenu';
+import FormInput from '@/components/forms/FormInput';
+import { unitSchema, type UnitFormInputs } from '@/schemas/validationSchemas';
 import { productSubmenuItems } from '@/constants/submenuItems';
 
 const Unit = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const units = useAppSelector((state) => state.products.units);
 
-  const [formData, setFormData] = useState({ name: '', shortName: '' });
+  const form = useForm<UnitFormInputs>({
+    resolver: zodResolver(unitSchema),
+    defaultValues: { name: '', shortName: '' },
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newUnit = { id: Date.now(), ...formData };
+  const onSubmit = (data: UnitFormInputs) => {
+    const newUnit = { id: Date.now(), ...data };
     dispatch(addUnit(newUnit));
-    setFormData({ name: '', shortName: '' });
+    form.reset();
   };
 
   const handleDelete = (id: number) => {
@@ -36,27 +39,23 @@ const Unit = () => {
         <div className="lg:col-span-1">
           <div className="bg-white rounded-lg border border-gray-200 p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Add Unit</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Name *</label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300 bg-white text-gray-900"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Short Name *</label>
-                <input
-                  type="text"
-                  value={formData.shortName}
-                  onChange={(e) => setFormData({ ...formData, shortName: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300 bg-white text-gray-900"
-                  required
-                />
-              </div>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormInput
+                label="Unit Name"
+                name="name"
+                type="text"
+                placeholder="e.g., Kilogram"
+                form={form}
+                required
+              />
+              <FormInput
+                label="Short Name"
+                name="shortName"
+                type="text"
+                placeholder="e.g., kg"
+                form={form}
+                required
+              />
               <button
                 type="submit"
                 className="w-full px-4 py-2 bg-[#4361ee] text-white rounded-lg hover:bg-[#3651de] transition-colors"
