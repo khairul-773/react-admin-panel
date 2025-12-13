@@ -74,20 +74,20 @@ function Table<T extends { id: number }>({
 
   return (
     <>
-      <div className="overflow-x-auto p-6">
-        <table className="w-full">
+      <div className="overflow-x-auto p-3 sm:p-4 md:p-6">
+        <table className="w-full min-w-[640px]">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
               {columns.map((column, index) => (
                 <th
                   key={index}
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                  className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
                 >
                   {column.header}
                 </th>
               ))}
               {(onEdit || onDelete) && (
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+                <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
                   Actions
                 </th>
               )}
@@ -107,7 +107,7 @@ function Table<T extends { id: number }>({
                   return (
                     <td
                       key={colIndex}
-                      className={`px-6 py-4 whitespace-nowrap text-sm ${
+                      className={`px-3 sm:px-4 md:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm ${
                         column.className || 'text-gray-900 group-hover:text-white'
                       }`}
                     >
@@ -116,11 +116,11 @@ function Table<T extends { id: number }>({
                   );
                 })}
                 {(onEdit || onDelete) && (
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 whitespace-nowrap text-right text-xs sm:text-sm font-medium">
                     {onEdit && (
                       <button
                         onClick={() => onEdit(item)}
-                        className="text-white bg-indigo-600 hover:bg-indigo-500 font-medium mr-3 px-3 py-1 rounded"
+                        className="text-white bg-indigo-600 hover:bg-indigo-500 font-medium mr-2 sm:mr-3 px-2 sm:px-3 py-1 rounded text-xs sm:text-sm"
                       >
                         Edit
                       </button>
@@ -128,7 +128,7 @@ function Table<T extends { id: number }>({
                     {onDelete && (
                       <button
                         onClick={() => handleDelete(item)}
-                        className="text-white font-medium bg-red-600 group-hover:bg-red-700 hover:bg-red-700 px-2 py-1 rounded"
+                        className="text-white font-medium bg-red-600 group-hover:bg-red-700 hover:bg-red-700 px-2 py-1 rounded text-xs sm:text-sm"
                       >
                         Delete
                       </button>
@@ -149,9 +149,9 @@ function Table<T extends { id: number }>({
 
       {/* Pagination */}
       {data.length > 0 && totalPages > 1 && (
-        <div className="px-6 py-5 border-t border-gray-200 bg-white">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-gray-600">
+        <div className="px-3 sm:px-4 md:px-6 py-4 sm:py-5 border-t border-gray-200 bg-white">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+            <div className="text-xs sm:text-sm text-gray-600 text-center sm:text-left">
               Showing <span className="font-semibold text-gray-900">{startIndex + 1}</span> to{' '}
               <span className="font-semibold text-gray-900">{Math.min(endIndex, data.length)}</span> of{' '}
               <span className="font-semibold text-gray-900">{data.length}</span> results
@@ -161,20 +161,20 @@ function Table<T extends { id: number }>({
               <button
                 onClick={() => goToPage(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all"
+                className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all"
                 aria-label="Previous page"
               >
-                <MdChevronLeft className="w-5 h-5" />
+                <MdChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               
               {getPageNumbers().map((page, index) => (
                 page === '...' ? (
-                  <span key={`ellipsis-${index}`} className="inline-flex items-center justify-center w-10 h-10 text-gray-400">...</span>
+                  <span key={`ellipsis-${index}`} className="hidden sm:inline-flex items-center justify-center w-10 h-10 text-gray-400">...</span>
                 ) : (
                   <button
                     key={page}
                     onClick={() => goToPage(page as number)}
-                    className={`inline-flex items-center justify-center w-10 h-10 rounded-md border font-medium transition-all ${
+                    className={`inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-md border font-medium transition-all text-xs sm:text-sm ${
                       currentPage === page
                         ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm hover:bg-indigo-700'
                         : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
@@ -190,10 +190,10 @@ function Table<T extends { id: number }>({
               <button
                 onClick={() => goToPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all"
+                className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all"
                 aria-label="Next page"
               >
-                <MdChevronRight className="w-5 h-5" />
+                <MdChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
           </div>

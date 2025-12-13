@@ -1,22 +1,35 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { MdSearch, MdNotifications } from 'react-icons/md';
+import { MdSearch, MdNotifications, MdMenu } from 'react-icons/md';
 
-const Header = () => {
+interface HeaderProps {
+  onMenuClick?: () => void;
+}
+
+const Header = ({ onMenuClick }: HeaderProps) => {
   const { user } = useAuth();
   const [showNotifications, setShowNotifications] = useState(false);
 
   return (
-    <header className="bg-white border-b border-gray-200 px-6 py-3 sticky top-0 z-30">
+    <header className="bg-white border-b border-gray-200 px-4 sm:px-6 py-3 sticky top-0 z-30">
       <div className="flex items-center justify-between">
-        {/* Left Section - Title */}
-        <div>
-          <h2 className="text-xl font-bold text-gray-900">Dashboard</h2>
-          <p className="text-sm text-gray-600">Welcome back!</p>
+        {/* Left Section - Menu & Title */}
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={onMenuClick}
+            className="md:hidden p-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors"
+            aria-label="Toggle menu"
+          >
+            <MdMenu className="text-2xl text-white" />
+          </button>
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900">Dashboard</h2>
+            <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">Welcome back!</p>
+          </div>
         </div>
 
         {/* Center Section - Search */}
-        <div className="flex-1 max-w-xl mx-4 hidden md:block">
+        <div className="flex-1 max-w-xl mx-4 hidden lg:block">
           <div className="relative">
             <input
               type="text"

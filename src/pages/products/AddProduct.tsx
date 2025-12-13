@@ -54,21 +54,21 @@ const AddProduct = () => {
   }));
 
   return (
-    <div className="p-6">
+    <div className="p-3 sm:p-4 md:p-6">
       <PageSubmenu items={productSubmenuItems} />
       
       {/* Main Card with Header and Form */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         {/* Header Section */}
-        <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
-          <h1 className="text-xl font-bold text-gray-900">Add Product</h1>
-          <p className="text-sm text-gray-600 mt-1">Fill in the details to add a new product</p>
+        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 bg-gray-50">
+          <h1 className="text-lg sm:text-xl font-bold text-gray-900">Add Product</h1>
+          <p className="text-xs sm:text-sm text-gray-600 mt-1">Fill in the details to add a new product</p>
         </div>
         
         {/* Form Section */}
-        <div className="p-6">
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-4 sm:p-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 sm:space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               <FormInput
                 label="Product Name"
                 name="name"

@@ -6,6 +6,7 @@ import { MdDashboard, MdPeople, MdDescription, MdShoppingCart, MdAdd, MdInventor
 interface SidebarProps {
   isOpen: boolean;
   onToggle: () => void;
+  isMobile?: boolean;
 }
 
 const menuItems = [
@@ -33,7 +34,7 @@ const menuItems = [
   },
 ];
 
-const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
+const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useAuth();
@@ -74,20 +75,24 @@ const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
 
   return (
     <aside className={`fixed left-0 top-0 h-screen bg-white border-r border-gray-200 flex flex-col z-50 transition-all duration-300 ${
-      isOpen ? 'w-64' : 'w-20'
+      isMobile 
+        ? isOpen ? 'w-64 translate-x-0' : 'w-64 -translate-x-full'
+        : isOpen ? 'w-64' : 'w-20'
     }`}>
-      <div className="px-6 py-3 border-b border-gray-200 min-h-[73px] flex items-center justify-between">
-        {isOpen && <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>}
-        <button
-          onClick={onToggle}
-          className="text-gray-900 hover:text-indigo-600 ml-auto !bg-transparent !p-0 !rounded-none"
-        >
-          {isOpen ? (
-            <MdKeyboardDoubleArrowRight className="text-2xl" />
-          ) : (
-            <MdKeyboardDoubleArrowLeft className="text-2xl" />
-          )}
-        </button>
+      <div className="px-3 sm:px-6 py-3 border-b border-gray-200 min-h-[73px] flex items-center justify-between">
+        {isOpen && <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">Admin Panel</h1>}
+        {!isMobile && (
+          <button
+            onClick={onToggle}
+            className="text-gray-900 hover:text-indigo-600 ml-auto !bg-transparent !p-0 !rounded-none"
+          >
+            {isOpen ? (
+              <MdKeyboardDoubleArrowRight className="text-2xl" />
+            ) : (
+              <MdKeyboardDoubleArrowLeft className="text-2xl" />
+            )}
+          </button>
+        )}
       </div>
 
       <nav className="flex-1 p-4 overflow-y-auto">

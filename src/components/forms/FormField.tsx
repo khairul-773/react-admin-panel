@@ -1,3 +1,5 @@
+import Select from 'react-select';
+
 interface FormFieldProps {
   label: string;
   name: string;
@@ -23,7 +25,34 @@ const FormField = ({
   rows = 4,
   className = '',
 }: FormFieldProps) => {
-  const baseInputClasses = "w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#4361ee] bg-white text-gray-900";
+  const baseInputClasses = "w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#4361ee] bg-white text-gray-900";
+
+  const customSelectStyles = {
+    control: (base: any, state: any) => ({
+      ...base,
+      minHeight: '42px',
+      height: '42px',
+      borderColor: state.isFocused ? '#4361ee' : '#e5e7eb',
+      boxShadow: state.isFocused ? '0 0 0 1px #4361ee' : 'none',
+      '&:hover': {
+        borderColor: '#4361ee',
+      },
+    }),
+    valueContainer: (base: any) => ({
+      ...base,
+      height: '42px',
+      padding: '0 12px',
+    }),
+    input: (base: any) => ({
+      ...base,
+      margin: '0',
+      padding: '0',
+    }),
+    indicatorsContainer: (base: any) => ({
+      ...base,
+      height: '42px',
+    }),
+  };
 
   return (
     <div className={className}>
@@ -32,20 +61,25 @@ const FormField = ({
       </label>
       
       {type === 'select' ? (
-        <select
+        <Select
           name={name}
-          value={value}
-          onChange={onChange}
-          className={baseInputClasses}
-          required={required}
-        >
-          <option value="">Select {label}</option>
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+          options={options}
+          value={options.find(opt => opt.value === value) || null}
+          onChange={(option) => {
+            const event = {
+              target: {
+                name,
+                value: option?.value || '',
+              },
+            } as React.ChangeEvent<HTMLSelectElement>;
+            onChange(event);
+          }}
+          placeholder={`Select ${label}`}
+          styles={customSelectStyles}
+          isClearable
+          className="react-select-container"
+          classNamePrefix="react-select"
+        />
       ) : type === 'textarea' ? (
         <textarea
           name={name}
@@ -62,7 +96,7 @@ const FormField = ({
           name={name}
           value={value}
           onChange={onChange}
-          className={baseInputClasses}
+          className={`${baseInputClasses} h-[42px]`}
           placeholder={placeholder}
           required={required}
         />

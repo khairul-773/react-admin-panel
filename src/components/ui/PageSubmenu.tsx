@@ -15,14 +15,14 @@ const PageSubmenu = ({ items, className = '' }: PageSubmenuProps) => {
   const location = useLocation();
 
   return (
-    <div className={`mb-4 flex gap-2 flex-wrap ${className}`}>
+    <div className={`mb-3 sm:mb-4 flex gap-2 flex-wrap ${className}`}>
       {items.map((item) => {
         const isActive = location.pathname === item.path;
         return (
           <button
             key={item.path}
             onClick={() => navigate(item.path)}
-            className={`px-4 py-2 border rounded-lg transition-colors ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 border rounded-lg transition-colors text-xs sm:text-sm ${
               isActive
                 ? 'bg-indigo-600 text-white border-indigo-600'
                 : 'bg-white border-gray-300 text-gray-900 hover:bg-gray-50'
