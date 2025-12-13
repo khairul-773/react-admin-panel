@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addUnit, deleteUnit } from '@/store/slices/productsSlice';
 import type { Unit } from '@/types';
@@ -10,6 +11,7 @@ import Modal from '@/components/ui/Modal';
 import FormInput from '@/components/forms/FormInput';
 import { unitSchema, type UnitFormInputs } from '@/schemas/validationSchemas';
 import { productSubmenuItems } from '@/constants/submenuItems';
+import { SUCCESS_MESSAGES } from '@/constants';
 import { MdAdd } from 'react-icons/md';
 
 const Unit = () => {
@@ -25,6 +27,7 @@ const Unit = () => {
   const onSubmit = (data: UnitFormInputs) => {
     const newUnit = { id: Date.now(), ...data };
     dispatch(addUnit(newUnit));
+    toast.success(SUCCESS_MESSAGES.UNIT_ADDED);
     form.reset();
     setIsModalOpen(false);
   };
@@ -32,6 +35,7 @@ const Unit = () => {
   const handleDelete = (id: number) => {
     if (window.confirm('Delete this unit?')) {
       dispatch(deleteUnit(id));
+      toast.success(SUCCESS_MESSAGES.UNIT_DELETED);
     }
   };
 

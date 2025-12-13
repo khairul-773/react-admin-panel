@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addBrand, deleteBrand } from '@/store/slices/productsSlice';
 import type { Brand } from '@/types';
@@ -10,6 +11,7 @@ import Modal from '@/components/ui/Modal';
 import FormInput from '@/components/forms/FormInput';
 import { nameSchema, type NameFormInputs } from '@/schemas/validationSchemas';
 import { productSubmenuItems } from '@/constants/submenuItems';
+import { SUCCESS_MESSAGES } from '@/constants';
 import { MdAdd } from 'react-icons/md';
 
 const Brand = () => {
@@ -25,6 +27,7 @@ const Brand = () => {
   const onSubmit = (data: NameFormInputs) => {
     const newBrand = { id: Date.now(), ...data, description: '' };
     dispatch(addBrand(newBrand));
+    toast.success(SUCCESS_MESSAGES.BRAND_ADDED);
     form.reset();
     setIsModalOpen(false);
   };
@@ -32,6 +35,7 @@ const Brand = () => {
   const handleDelete = (id: number) => {
     if (window.confirm('Delete this brand?')) {
       dispatch(deleteBrand(id));
+      toast.success(SUCCESS_MESSAGES.BRAND_DELETED);
     }
   };
 

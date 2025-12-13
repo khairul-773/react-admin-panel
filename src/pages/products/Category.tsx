@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addCategory, deleteCategory } from '@/store/slices/productsSlice';
 import type { Category } from '@/types';
@@ -10,6 +11,7 @@ import Modal from '@/components/ui/Modal';
 import FormInput from '@/components/forms/FormInput';
 import { nameSchema, type NameFormInputs } from '@/schemas/validationSchemas';
 import { productSubmenuItems } from '@/constants/submenuItems';
+import { SUCCESS_MESSAGES } from '@/constants';
 import { MdAdd } from 'react-icons/md';
 
 const Category = () => {
@@ -25,6 +27,7 @@ const Category = () => {
   const onSubmit = (data: NameFormInputs) => {
     const newCategory = { id: Date.now(), ...data, description: '' };
     dispatch(addCategory(newCategory));
+    toast.success(SUCCESS_MESSAGES.CATEGORY_ADDED);
     form.reset();
     setIsModalOpen(false);
   };
@@ -32,6 +35,7 @@ const Category = () => {
   const handleDelete = (id: number) => {
     if (window.confirm('Delete this category?')) {
       dispatch(deleteCategory(id));
+      toast.success(SUCCESS_MESSAGES.CATEGORY_DELETED);
     }
   };
 
