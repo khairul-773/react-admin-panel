@@ -47,7 +47,7 @@ function TableFilters<T>({
               placeholder="Search across all columns..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full h-[46px] pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm shadow-sm"
+              className="w-full h-[46px] pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm shadow-sm bg-white text-gray-900"
             />
           </div>
         )}
@@ -73,7 +73,7 @@ function TableFilters<T>({
                       endDate={dateFilters[fieldKey]?.end ? new Date(dateFilters[fieldKey].end) : undefined}
                       placeholderText="From"
                       dateFormat="dd/MM/yyyy"
-                      className="w-28 px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-28 px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900"
                     />
                     <span className="text-gray-400 text-xs">—</span>
                     <DatePicker
@@ -85,7 +85,7 @@ function TableFilters<T>({
                       minDate={dateFilters[fieldKey]?.start ? new Date(dateFilters[fieldKey].start) : undefined}
                       placeholderText="To"
                       dateFormat="dd/MM/yyyy"
-                      className="w-28 px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-28 px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900"
                     />
                     {(dateFilters[fieldKey]?.start || dateFilters[fieldKey]?.end) && (
                       <button

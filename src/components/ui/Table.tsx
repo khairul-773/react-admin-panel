@@ -375,7 +375,7 @@ function Table<T extends { id: number }>({
               <button
                 onClick={() => goToPage(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all"
+                className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white:bg-gray-700 disabled:hover:border-gray-300:border-gray-600 transition-all"
                 aria-label="Previous page"
               >
                 <MdChevronLeft className="w-5 h-5" />
@@ -404,7 +404,7 @@ function Table<T extends { id: number }>({
               <button
                 onClick={() => goToPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition-all"
+                className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white:bg-gray-700 disabled:hover:border-gray-300:border-gray-600 transition-all"
                 aria-label="Next page"
               >
                 <MdChevronRight className="w-5 h-5" />
