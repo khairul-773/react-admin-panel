@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { MdSearch, MdNotifications, MdMenu, MdPerson, MdSettings, MdLogout } from 'react-icons/md';
@@ -11,6 +11,22 @@ const Header = ({ onMenuClick }: HeaderProps) => {
   const { user, logout } = useAuth();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const notificationRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+        setShowNotifications(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <header className="bg-white border-b border-gray-200 px-4 sm:px-6 py-3 sticky top-0 z-30">
@@ -45,7 +61,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
         {/* Right Section */}
         <div className="flex items-center gap-4">
           {/* Notifications */}
-          <div className="relative">
+          <div className="relative" ref={notificationRef}>
             <button
               onClick={() => setShowNotifications(!showNotifications)}
               className="relative p-2 text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-colors"
@@ -66,7 +82,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
             )}
           </div>
           {/* User Profile */}
-          <div className="relative">
+          <div className="relative" ref={profileRef}>
             <button
               onClick={() => setShowProfileMenu(!showProfileMenu)}
               className="flex items-center gap-3 pl-4 border-l border-gray-200 bg-transparent"
