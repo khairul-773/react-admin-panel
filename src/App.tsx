@@ -9,6 +9,7 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Dashboard from '@/pages/Dashboard';
 import Users from '@/pages/Users';
+import Profile from '@/pages/Profile';
 import NotFound from '@/pages/NotFound';
 import AddProduct from '@/pages/products/AddProduct';
 import AllProducts from '@/pages/products/AllProducts';
@@ -34,6 +35,7 @@ interface RouteConfig {
 const protectedRoutes: RouteConfig[] = [
   { path: '/dashboard', component: Dashboard },
   { path: '/users', component: Users },
+  { path: '/profile', component: Profile },
   { path: '/posts/add', component: AddPost },
   { path: '/posts/all', component: AllPosts },
   { path: '/products/add', component: AddProduct },

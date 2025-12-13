@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchPosts } from '@/store/slices/postsSlice';
+import { fetchProducts } from '@/store/slices/productsSlice';
+import StatCard from '@/components/dashboard/StatCard';
+import RecentActivity from '@/components/dashboard/RecentActivity';
 import DataTable from '@/components/crud/DataTable';
-import { MdPeople, MdDescription, MdWhatshot, MdAttachMoney, MdTrendingUp } from 'react-icons/md';
+import { MdInventory, MdShoppingCart, MdCategory, MdPostAdd } from 'react-icons/md';
 
 const Dashboard: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const { posts } = useAppSelector((state) => state.posts);
+    const { products, categories, brands } = useAppSelector((state) => state.products);
+    
+    useEffect(() => {
+        dispatch(fetchPosts());
+        dispatch(fetchProducts());
+    }, [dispatch]);
+
     const stats = [
-        { label: 'Total Users', value: '1,234', icon: <MdPeople />, color: 'bg-gray-100' },
-        { label: 'Total Posts', value: '5,678', icon: <MdDescription />, color: 'bg-gray-100' },
-        { label: 'Active Sessions', value: '89', icon: <MdWhatshot />, color: 'bg-gray-100' },
-        { label: 'Revenue', value: '$12,345', icon: <MdAttachMoney />, color: 'bg-gray-100' },
+        { label: 'Total Products', value: products.length.toString(), icon: <MdInventory />, trend: '+12%' },
+        { label: 'Categories', value: categories.length.toString(), icon: <MdCategory />, trend: '+5%' },
+        { label: 'Brands', value: brands.length.toString(), icon: <MdShoppingCart />, trend: '+8%' },
+        { label: 'Total Posts', value: posts.length.toString(), icon: <MdPostAdd />, trend: '+15%' },
     ];
 
     return (
@@ -21,31 +35,33 @@ const Dashboard: React.FC = () => {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat) => (
-                    <div key={stat.label} className="bg-white rounded-lg border border-gray-200 p-6 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-colors group">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm font-medium text-gray-600 group-hover:text-white tracking-wide uppercase">{stat.label}</p>
-                                <p className="text-3xl font-bold text-gray-900 group-hover:text-white mt-2 tracking-tight">{stat.value}</p>
-                            </div>
-                            <div className={`w-12 h-12 ${stat.color} group-hover:bg-white rounded-lg flex items-center justify-center text-2xl border border-gray-200 group-hover:border-white transition-colors`}>
-                                <span className="text-[#4361ee] group-hover:text-[#4361ee]">{stat.icon}</span>
-                            </div>
-                        </div>
-                        <div className="mt-4 flex items-center text-sm">
-                            <span className="text-gray-900 group-hover:text-white font-semibold flex items-center gap-1"><MdTrendingUp /> 12%</span>
-                            <span className="text-gray-600 group-hover:text-gray-200 ml-2 font-normal">vs last month</span>
-                        </div>
-                    </div>
+                    <StatCard
+                        key={stat.label}
+                        label={stat.label}
+                        value={stat.value}
+                        icon={stat.icon}
+                        trend={stat.trend}
+                    />
                 ))}
             </div>
 
-            {/* Data Table */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <div className="mb-4">
-                    <h2 className="text-lg sm:text-xl font-semibold text-gray-900 tracking-tight">Recent Posts</h2>
-                    <p className="text-sm text-gray-600 mt-1 leading-relaxed">Latest posts from JSONPlaceholder API</p>
+            {/* Recent Activity and Recent Posts Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Recent Activity - Takes 1 column */}
+                <div className="lg:col-span-1">
+                    <RecentActivity />
                 </div>
-                <DataTable />
+                
+                {/* Recent Posts - Takes 2 columns */}
+                <div className="lg:col-span-2">
+                    <div className="bg-white rounded-lg border border-gray-200 p-6">
+                        <div className="mb-4">
+                            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 tracking-tight">Recent Posts</h2>
+                            <p className="text-sm text-gray-600 mt-1 leading-relaxed">Latest posts from JSONPlaceholder API</p>
+                        </div>
+                        <DataTable />
+                    </div>
+                </div>
             </div>
         </div>
     );

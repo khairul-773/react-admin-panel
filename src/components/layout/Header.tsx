@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { MdSearch, MdNotifications, MdMenu } from 'react-icons/md';
+import { MdSearch, MdNotifications, MdMenu, MdPerson, MdSettings, MdLogout } from 'react-icons/md';
 
 interface HeaderProps {
   onMenuClick?: () => void;
 }
 
 const Header = ({ onMenuClick }: HeaderProps) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   return (
     <header className="bg-white border-b border-gray-200 px-4 sm:px-6 py-3 sticky top-0 z-30">
@@ -63,16 +65,54 @@ const Header = ({ onMenuClick }: HeaderProps) => {
               </div>
             )}
           </div>
-
           {/* User Profile */}
-          <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
-            <div className="text-right hidden sm:block">
-              <p className="text-sm font-semibold text-gray-900">{user?.email}</p>
-              <p className="text-xs text-gray-600 font-normal">Admin</p>
-            </div>
-            <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-semibold">
-              {user?.email?.charAt(0).toUpperCase() || 'A'}
-            </div>
+          <div className="relative">
+            <button
+              onClick={() => setShowProfileMenu(!showProfileMenu)}
+              className="flex items-center gap-3 pl-4 border-l border-gray-200 hover:bg-gray-50 rounded-lg transition-colors p-2"
+            >
+              <div className="text-right hidden sm:block">
+                <p className="text-sm font-semibold text-gray-900">{user?.email}</p>
+                <p className="text-xs text-gray-600 font-normal">Admin</p>
+              </div>
+              <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-semibold">
+                {user?.email?.charAt(0).toUpperCase() || 'A'}
+              </div>
+            </button>
+
+            {showProfileMenu && (
+              <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                <div className="p-2">
+                  <Link
+                    to="/profile"
+                    onClick={() => setShowProfileMenu(false)}
+                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
+                  >
+                    <MdPerson className="text-lg" />
+                    <span>Profile</span>
+                  </Link>
+                  <Link
+                    to="/profile"
+                    onClick={() => setShowProfileMenu(false)}
+                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
+                  >
+                    <MdSettings className="text-lg" />
+                    <span>Settings</span>
+                  </Link>
+                  <hr className="my-2 border-gray-200" />
+                  <button
+                    onClick={() => {
+                      setShowProfileMenu(false);
+                      logout();
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                  >
+                    <MdLogout className="text-lg" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
