@@ -21,16 +21,25 @@ export const fetchProducts = createAsyncThunk(
     const brands = ['Samsung', 'Nike', 'Sony', 'Apple', 'Adidas', 'Dell', 'HP', 'Canon', 'LG', 'Puma'];
     
     // Transform photos data into products format
-    const products: Product[] = photos.map((photo: any) => ({
-      id: photo.id,
-      name: photo.title.split(' ').slice(0, 3).join(' '), // First 3 words as product name
-      category: categories[photo.id % categories.length],
-      brand: brands[photo.id % brands.length],
-      unit: 'pcs',
-      barcode: `BAR${photo.id.toString().padStart(6, '0')}`,
-      price: Math.floor(Math.random() * 50000) + 500,
-      stock: Math.floor(Math.random() * 100) + 1,
-    }));
+    const products: Product[] = photos.map((photo: any) => {
+      const daysAgo = photo.id % 365;
+      const createdDate = new Date();
+      createdDate.setDate(createdDate.getDate() - daysAgo);
+      const updatedDate = new Date();
+      updatedDate.setDate(updatedDate.getDate() - Math.floor(daysAgo / 2));
+      
+      return {
+        id: photo.id,
+        name: photo.title.split(' ').slice(0, 3).join(' '), // First 3 words as product name
+        category: categories[photo.id % categories.length],
+        brand: brands[photo.id % brands.length],
+        unit: 'pcs',
+        barcode: `BAR${photo.id.toString().padStart(6, '0')}`,
+        price: Math.floor(Math.random() * 50000) + 500,
+        stock: Math.floor(Math.random() * 100) + 1,
+        createdAt: createdDate.toISOString().split('T')[0],
+      };
+    });
     
     return products;
   }

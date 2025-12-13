@@ -46,10 +46,10 @@ const AllProducts = () => {
     { header: 'Name', accessor: 'name', className: 'font-medium text-gray-900 group-hover:text-white' },
     { header: 'Category', accessor: 'category', className: 'text-gray-700 group-hover:text-white' },
     { header: 'Brand', accessor: 'brand', className: 'text-gray-700 group-hover:text-white' },
-    { header: 'Unit', accessor: 'unit', className: 'text-gray-700 group-hover:text-white' },
     { header: 'Barcode', accessor: 'barcode', className: 'text-gray-700 group-hover:text-white' },
     { header: 'Price', accessor: (product) => `৳${product.price}`, className: 'text-gray-900 group-hover:text-white' },
     { header: 'Stock', accessor: 'stock', className: 'text-gray-900 group-hover:text-white' },
+    { header: 'Created', accessor: 'createdAt', className: 'text-gray-700 group-hover:text-white text-xs', isDate: true },
   ];
 
   const handleEdit = (product: Product) => {
@@ -123,6 +123,10 @@ const AllProducts = () => {
           onEdit={handleEdit}
           onDelete={handleDelete}
           emptyMessage="No products found."
+          enableSearch={true}
+          enableSort={true}
+          enableDateFilter={true}
+          dateColumns={['createdAt']}
         />
       </div>
 

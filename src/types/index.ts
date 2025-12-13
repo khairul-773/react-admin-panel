@@ -31,6 +31,7 @@ export interface Product {
   barcode: string;
   price: number;
   stock: number;
+  createdAt: string;
 }
 
 export interface ApiResponse<T> {

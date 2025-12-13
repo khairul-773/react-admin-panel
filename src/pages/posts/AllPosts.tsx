@@ -101,6 +101,10 @@ const AllPosts = () => {
           onEdit={handleEdit}
           onDelete={handleDelete}
           emptyMessage="No posts found."
+          enableSearch={true}
+          enableSort={true}
+          enableDateFilter={false}
+          dateColumns={[]}
         />
       </div>
 
