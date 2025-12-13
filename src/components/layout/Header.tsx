@@ -33,7 +33,7 @@ const Header = () => {
           <div className="relative">
             <button
               onClick={() => setShowNotifications(!showNotifications)}
-              className="relative p-2 text-white bg-[#4361ee] hover:bg-[#3651de] rounded-lg transition-colors"
+              className="relative p-2 text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-colors"
             >
               <MdNotifications className="text-xl" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full"></span>
@@ -57,7 +57,7 @@ const Header = () => {
               <p className="text-sm font-medium text-gray-900">{user?.email}</p>
               <p className="text-xs text-gray-600">Admin</p>
             </div>
-            <div className="w-10 h-10 bg-[#4361ee] rounded-full flex items-center justify-center text-white font-semibold">
+            <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-semibold">
               {user?.email?.[0].toUpperCase() || 'A'}
             </div>
           </div>

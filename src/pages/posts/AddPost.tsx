@@ -36,46 +36,56 @@ const AddPost = () => {
   return (
     <div className="p-6">
       <PageSubmenu items={postSubmenuItems} />
-      <PageHeader title="Add Post" />
       
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormInput
-            label="Title"
-            name="title"
-            type="text"
-            placeholder="Enter post title"
-            form={form}
-            required
-          />
+      {/* Main Card with Header and Form */}
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        {/* Header Section */}
+        <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+          <h1 className="text-xl font-bold text-gray-900">Add Post</h1>
+          <p className="text-sm text-gray-600 mt-1">Create a new post by filling in the details below</p>
+        </div>
+        
+        {/* Form Section */}
+        <div className="p-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormInput
+              label="Title"
+              name="title"
+              type="text"
+              placeholder="Enter post title"
+              form={form}
+              required
+            />
 
-          <FormInput
-            label="Content"
-            name="body"
-            type="textarea"
-            placeholder="Write your post content here..."
-            rows={8}
-            form={form}
-            required
-          />
+            <FormInput
+              label="Content"
+              name="body"
+              type="textarea"
+              placeholder="Write your post content here..."
+              rows={8}
+              form={form}
+              required
+            />
 
-          <div className="flex gap-3 pt-4">
-            <button
-              type="submit"
-              disabled={form.formState.isSubmitting}
-              className="px-6 py-2 bg-[#4361ee] text-white rounded-lg hover:bg-[#3651de] transition-colors disabled:opacity-50"
-            >
-              {form.formState.isSubmitting ? 'Adding...' : 'Add Post'}
-            </button>
-            <button
-              type="button"
-              onClick={() => form.reset()}
-              className="px-6 py-2 bg-white border border-gray-300 text-gray-900 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              Reset
-            </button>
-          </div>
-        </form>
+            {/* Footer Section */}
+            <div className="flex gap-3 mt-6">
+              <button
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition-colors disabled:opacity-50"
+              >
+                {form.formState.isSubmitting ? 'Adding...' : 'Add Post'}
+              </button>
+              <button
+                type="button"
+                onClick={() => form.reset()}
+                className="px-6 py-2 bg-white border border-gray-300 text-gray-900 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

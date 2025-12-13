@@ -15,7 +15,7 @@ const initialState: PostsState = {
 };
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  const data = await fetchData('posts?_limit=10');
+  const data = await fetchData('posts', 10);
   return data;
 });
 

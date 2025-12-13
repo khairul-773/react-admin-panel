@@ -2,9 +2,10 @@ import axios from 'axios';
 
 const API_URL = 'https://jsonplaceholder.typicode.com';
 
-export const fetchData = async (endpoint: string) => {
+export const fetchData = async (endpoint: string, limit?: number) => {
     try {
-        const response = await axios.get(`${API_URL}/${endpoint}`);
+        const url = limit ? `${API_URL}/${endpoint}?_limit=${limit}` : `${API_URL}/${endpoint}`;
+        const response = await axios.get(url);
         return response.data;
     } catch (error) {
         throw new Error('Error fetching data');

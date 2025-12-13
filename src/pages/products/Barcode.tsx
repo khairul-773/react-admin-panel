@@ -50,9 +50,12 @@ const Barcode = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Add Form */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Generate Barcode</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+              <h2 className="text-lg font-semibold text-gray-900">Generate Barcode</h2>
+            </div>
+            <div className="p-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">Product Name *</label>
                 <input
@@ -84,13 +87,14 @@ const Barcode = () => {
               </div>
               <button
                 type="submit"
-                className="w-full px-4 py-2 bg-[#4361ee] text-white rounded-lg hover:bg-[#3651de] transition-colors"
+                className="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition-colors"
               >
                 Save Barcode
               </button>
             </form>
           </div>
         </div>
+      </div>
 
         {/* List */}
         <div className="lg:col-span-2">
@@ -107,13 +111,13 @@ const Barcode = () => {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {barcodes.map((item) => (
-                  <tr key={item.id} className="hover:bg-[#4361ee] hover:text-white transition-colors group">
+                  <tr key={item.id} className="hover:bg-indigo-600 hover:text-white transition-colors group">
                     <td className="px-6 py-4 text-sm text-gray-900 group-hover:text-white">{item.id}</td>
                     <td className="px-6 py-4 text-sm font-medium text-gray-900 group-hover:text-white">{item.productName}</td>
                     <td className="px-6 py-4 text-sm text-gray-700 group-hover:text-white font-mono">{item.barcode}</td>
                     <td className="px-6 py-4 text-sm text-gray-700 group-hover:text-white">{item.generatedDate}</td>
                     <td className="px-6 py-4 text-right text-sm">
-                      <button className="text-white bg-[#4361ee] hover:bg-[#3651de] font-medium mr-3 px-3 py-1 rounded">Print</button>
+                      <button className="text-white bg-indigo-600 hover:bg-indigo-500 font-medium mr-3 px-3 py-1 rounded">Print</button>
                       <button onClick={() => handleDelete(item.id)} className="text-white font-medium bg-red-600 group-hover:bg-red-700 hover:bg-red-700 px-2 py-1 rounded">Delete</button>
                     </td>
                   </tr>

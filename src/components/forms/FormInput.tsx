@@ -34,7 +34,7 @@ const FormInput = ({
   return (
     <div className={className}>
       <label className="block text-sm font-medium text-gray-900 mb-2">
-        {label} {required && '*'}
+        {label} {required && <span className="text-red-500">*</span>}
       </label>
       
       {type === 'select' ? (

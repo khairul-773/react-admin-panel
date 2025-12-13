@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import AuthForm from '../components/auth/AuthForm';
 import { useAuth } from '../context/AuthContext';
 
@@ -22,11 +22,22 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-50">
-            <div className="bg-white p-8 rounded-lg border border-gray-200 w-96">
-                <h2 className="text-2xl font-bold mb-6 text-gray-900">Login</h2>
-                {error && <p className="text-gray-900 bg-red-50 border border-red-200 rounded-md p-3 mb-4">{error}</p>}
+        <div className="flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8 bg-gray-50">
+            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Admin Panel" className="mx-auto h-10 w-auto" />
+                <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+            </div>
+
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                {error && <p className="text-red-600 bg-red-50 border border-red-200 rounded-md p-3 mb-4 text-sm text-center">{error}</p>}
                 <AuthForm onSubmit={handleLogin} />
+                
+                <p className="mt-10 text-center text-sm text-gray-600">
+                    Not a member?{' '}
+                    <Link to="/register" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                        Create an account
+                    </Link>
+                </p>
             </div>
         </div>
     );

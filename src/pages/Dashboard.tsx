@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat) => (
-                    <div key={stat.label} className="bg-white rounded-lg border border-gray-200 p-6 hover:bg-[#4361ee] hover:text-white hover:border-[#4361ee] transition-colors group">
+                    <div key={stat.label} className="bg-white rounded-lg border border-gray-200 p-6 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-colors group">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-gray-700 group-hover:text-white">{stat.label}</p>

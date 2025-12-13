@@ -80,7 +80,7 @@ const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
         {isOpen && <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>}
         <button
           onClick={onToggle}
-          className="text-gray-900 hover:text-[#4361ee] ml-auto !bg-transparent !p-0 !rounded-none"
+          className="text-gray-900 hover:text-indigo-600 ml-auto !bg-transparent !p-0 !rounded-none"
         >
           {isOpen ? (
             <MdKeyboardDoubleArrowRight className="text-2xl" />
@@ -101,8 +101,8 @@ const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
                     onClick={() => isOpen && toggleMenu(item.label)}
                     className={`flex items-center ${isOpen ? 'gap-3' : 'justify-center'} px-3 py-2 rounded-md text-sm transition-colors cursor-pointer ${
                       isMenuActive(item)
-                        ? 'bg-[#4361ee] text-white'
-                        : 'text-gray-900 hover:bg-[#4361ee] hover:text-white'
+                        ? 'bg-indigo-600 text-white'
+                        : 'text-gray-900 hover:bg-indigo-600 hover:text-white'
                     }`}
                   >
                     <span>{item.icon}</span>
@@ -126,8 +126,8 @@ const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
                             className={({ isActive }) =>
                               `flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
                                 isActive
-                                  ? 'bg-[#4361ee] text-white'
-                                  : 'text-gray-900 hover:bg-[#4361ee] hover:text-white'
+                                  ? 'bg-indigo-600 text-white'
+                                  : 'text-gray-900 hover:bg-indigo-600 hover:text-white'
                               }`
                             }
                           >
@@ -146,8 +146,8 @@ const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
                   className={({ isActive }) =>
                     `flex items-center ${isOpen ? 'gap-3' : 'justify-center'} px-3 py-2 rounded-md transition-colors ${
                       isActive
-                        ? 'bg-[#4361ee] text-white'
-                        : 'text-gray-900 hover:bg-[#4361ee] hover:text-white'
+                        ? 'bg-indigo-600 text-white'
+                        : 'text-gray-900 hover:bg-indigo-600 hover:text-white'
                     }`
                   }
                 >
@@ -163,7 +163,7 @@ const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
       <div className="p-4 border-t border-gray-200">
         <button
           onClick={handleLogout}
-          className={`w-full px-3 py-2 rounded-md bg-[#4361ee] hover:bg-[#3651de] text-white transition-colors ${isOpen ? 'text-left' : 'text-center'}`}
+          className={`w-full px-3 py-2 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white transition-colors ${isOpen ? 'text-left' : 'text-center'}`}
         >
           {isOpen ? 'Logout' : '⎋'}
         </button>

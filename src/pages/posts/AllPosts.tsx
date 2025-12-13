@@ -88,19 +88,21 @@ const AllPosts = () => {
   return (
     <div className="p-6">
       <PageSubmenu items={postSubmenuItems} />
-      <PageHeader 
-        title="All Posts" 
-        buttonText="+ Add New"
-        buttonPath="/posts/add"
-      />
+      
+      <div className="mt-6 bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+          <h1 className="text-xl font-bold text-gray-900">All Posts</h1>
+          <p className="text-sm text-gray-600 mt-1">Manage all your posts</p>
+        </div>
 
-      <Table
-        columns={columns}
-        data={posts}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        emptyMessage='No posts found. Click "+ Add New" to create one.'
-      />
+        <Table
+          columns={columns}
+          data={posts}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          emptyMessage="No posts found."
+        />
+      </div>
 
       {/* Edit Modal */}
       {isModalOpen && currentPost && (
@@ -145,7 +147,7 @@ const AllPosts = () => {
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 bg-[#4361ee] text-white rounded-lg hover:bg-[#3651de] transition-colors"
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition-colors"
               >
                 Update Post
               </button>

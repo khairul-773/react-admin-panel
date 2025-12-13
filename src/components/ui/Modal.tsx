@@ -17,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
         {title && <h2 className="text-lg font-semibold mb-4 text-gray-900">{title}</h2>}
         <div>{children}</div>
         <button
-          className="mt-4 bg-[#4361ee] hover:bg-[#3651de] text-white px-4 py-2 rounded transition-colors"
+          className="mt-4 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded transition-colors"
           onClick={onClose}
         >
           Close

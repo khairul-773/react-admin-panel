@@ -128,7 +128,7 @@ const ProductForm = ({
       <div className="flex gap-3 pt-4">
         <button
           type="submit"
-          className="px-6 py-2 bg-[#4361ee] text-white rounded-lg hover:bg-[#3651de] transition-colors"
+          className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition-colors"
         >
           {submitButtonText}
         </button>

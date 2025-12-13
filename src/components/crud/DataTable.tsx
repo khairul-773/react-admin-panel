@@ -34,7 +34,7 @@ const DataTable: React.FC = () => {
                 </thead>
                 <tbody>
                     {posts.map((item) => (
-                        <tr key={item.id} className="hover:bg-[#4361ee] hover:text-white border-b border-gray-100 transition-colors">
+                        <tr key={item.id} className="hover:bg-indigo-600 hover:text-white border-b border-gray-100 transition-colors">
                             <td className="py-3 px-4">{item.id}</td>
                             <td className="py-3 px-4">{item.title}</td>
                             <td className="py-3 px-4">{item.body.substring(0, 100)}...</td>

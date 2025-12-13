@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '../ui/Button';
-import FormInput from '../forms/FormInput';
 import { authSchema, type AuthFormInputs } from '@/schemas/validationSchemas';
 
 interface AuthFormProps {
@@ -29,34 +28,63 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin = true }) => {
   };
 
   return (
-    <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-4">
+    <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
       {form.formState.errors.root && (
-        <div className="text-gray-900 bg-red-50 border border-red-200 rounded-md p-3 text-sm">
+        <div className="text-red-600 bg-red-50 border border-red-200 rounded-md p-3 text-sm">
           {form.formState.errors.root.message}
         </div>
       )}
       
-      <FormInput
-        label="Email"
-        name="email"
-        type="text"
-        placeholder="Enter your email"
-        form={form}
-        required
-      />
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-900">Email address</label>
+        <div className="mt-2">
+          <input
+            id="email"
+            type="email"
+            {...form.register('email')}
+            autoComplete="email"
+            className="block w-full rounded-md bg-white border border-gray-300 px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm"
+            placeholder="Enter your email"
+          />
+          {form.formState.errors.email && (
+            <p className="mt-1 text-sm text-red-600">{form.formState.errors.email.message}</p>
+          )}
+        </div>
+      </div>
       
-      <FormInput
-        label="Password"
-        name="password"
-        type="password"
-        placeholder="Enter your password"
-        form={form}
-        required
-      />
+      <div>
+        <div className="flex items-center justify-between">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-900">Password</label>
+          {isLogin && (
+            <div className="text-sm">
+              <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+            </div>
+          )}
+        </div>
+        <div className="mt-2">
+          <input
+            id="password"
+            type="password"
+            {...form.register('password')}
+            autoComplete="current-password"
+            className="block w-full rounded-md bg-white border border-gray-300 px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm"
+            placeholder="Enter your password"
+          />
+          {form.formState.errors.password && (
+            <p className="mt-1 text-sm text-red-600">{form.formState.errors.password.message}</p>
+          )}
+        </div>
+      </div>
       
-      <Button type="submit" disabled={form.formState.isSubmitting}>
-        {form.formState.isSubmitting ? 'Loading...' : isLogin ? 'Login' : 'Register'}
-      </Button>
+      <div>
+        <button
+          type="submit"
+          disabled={form.formState.isSubmitting}
+          className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {form.formState.isSubmitting ? 'Loading...' : isLogin ? 'Sign in' : 'Create account'}
+        </button>
+      </div>
     </form>
   );
 };
