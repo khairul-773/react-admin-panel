@@ -21,8 +21,8 @@ const FormCard = ({
     <div className="bg-white rounded-lg shadow-sm border border-gray-200">
       {/* Header */}
       <div className="border-b border-gray-200 px-6 py-4">
-        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-        {description && <p className="text-sm text-gray-600 mt-1">{description}</p>}
+        <h3 className="text-lg sm:text-xl font-semibold text-gray-900 tracking-tight">{title}</h3>
+        {description && <p className="text-sm text-gray-600 mt-1 leading-relaxed">{description}</p>}
       </div>
 
       {/* Body */}
@@ -34,14 +34,14 @@ const FormCard = ({
           <div className="border-t border-gray-200 -mx-6 -mb-6 mt-6 px-6 py-4 bg-gray-50 rounded-b-lg flex justify-end gap-3">
             <button
               type="button"
-              className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              className="px-4 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm font-semibold tracking-wide"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-semibold tracking-wide"
             >
               {isSubmitting ? 'Submitting...' : submitText}
             </button>

@@ -62,7 +62,7 @@ const FormInput = ({
 
   return (
     <div className={className}>
-      <label className="block text-sm font-medium text-gray-900 mb-2">
+      <label className="block text-sm font-semibold text-gray-900 mb-2">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       
@@ -99,9 +99,8 @@ const FormInput = ({
           placeholder={placeholder}
         />
       )}
-      
       {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
+        <p className="mt-1 text-sm text-red-600 font-medium">{error}</p>
       )}
     </div>
   );

@@ -32,7 +32,7 @@ const Brand = () => {
     <div className="p-6">
       <PageSubmenu items={productSubmenuItems} />
 
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Product Brands</h1>
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 tracking-tight">Product Brands</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Add Form */}
@@ -81,8 +81,8 @@ const Brand = () => {
                     <td className="px-6 py-4 text-sm font-medium text-gray-900 group-hover:text-white">{brand.name}</td>
                     <td className="px-6 py-4 text-sm text-gray-700 group-hover:text-white">{brand.description}</td>
                     <td className="px-6 py-4 text-right text-sm">
-                      <button className="text-white bg-indigo-600 hover:bg-indigo-500 font-medium mr-3 px-3 py-1 rounded">Edit</button>
-                      <button onClick={() => handleDelete(brand.id)} className="text-white font-medium bg-red-600 group-hover:bg-red-700 hover:bg-red-700 px-2 py-1 rounded">Delete</button>
+                      <button className="text-white bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold tracking-wide mr-3 px-3 py-1 rounded">Edit</button>
+                      <button onClick={() => handleDelete(brand.id)} className="text-white text-sm font-semibold tracking-wide bg-red-600 group-hover:bg-red-700 hover:bg-red-700 px-2 py-1 rounded">Delete</button>
                     </td>
                   </tr>
                 ))}

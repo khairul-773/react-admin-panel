@@ -30,11 +30,11 @@ const AllPosts = () => {
 
   const columns: Column<Post>[] = [
     { header: 'ID', accessor: 'id' },
-    { header: 'Title', accessor: 'title', className: 'font-medium text-gray-900 group-hover:text-white' },
+    { header: 'Title', accessor: 'title', className: 'font-semibold text-gray-900 group-hover:text-white' },
     { 
       header: 'Content', 
       accessor: (post) => <div className="max-w-md truncate">{post.body}</div>,
-      className: 'text-gray-700 group-hover:text-white'
+      className: 'text-gray-600 group-hover:text-white'
     },
   ];
 
@@ -72,7 +72,7 @@ const AllPosts = () => {
   if (loading) {
     return (
       <div className="p-6">
-        <div className="text-center text-gray-500">Loading posts...</div>
+        <div className="text-center text-base text-gray-500 font-medium">Loading posts...</div>
       </div>
     );
   }
@@ -80,7 +80,7 @@ const AllPosts = () => {
   if (error) {
     return (
       <div className="p-6">
-        <div className="text-center text-red-500">Error: {error}</div>
+        <div className="text-center text-base text-red-500 font-medium">Error: {error}</div>
       </div>
     );
   }
@@ -91,8 +91,8 @@ const AllPosts = () => {
       
       <div className="mt-6 bg-white rounded-lg border border-gray-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
-          <h1 className="text-xl font-bold text-gray-900">All Posts</h1>
-          <p className="text-sm text-gray-600 mt-1">Manage all your posts</p>
+          <h1 className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight">All Posts</h1>
+          <p className="text-sm text-gray-600 mt-1 leading-relaxed">Manage all your posts</p>
         </div>
 
         <Table

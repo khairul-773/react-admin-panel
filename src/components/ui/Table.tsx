@@ -81,13 +81,13 @@ function Table<T extends { id: number }>({
               {columns.map((column, index) => (
                 <th
                   key={index}
-                  className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                  className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                 >
                   {column.header}
                 </th>
               ))}
               {(onEdit || onDelete) && (
-                <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+                <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Actions
                 </th>
               )}
@@ -107,7 +107,7 @@ function Table<T extends { id: number }>({
                   return (
                     <td
                       key={colIndex}
-                      className={`px-3 sm:px-4 md:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm ${
+                      className={`px-3 sm:px-4 md:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-medium ${
                         column.className || 'text-gray-900 group-hover:text-white'
                       }`}
                     >
@@ -120,7 +120,7 @@ function Table<T extends { id: number }>({
                     {onEdit && (
                       <button
                         onClick={() => onEdit(item)}
-                        className="text-white bg-indigo-600 hover:bg-indigo-500 font-medium mr-2 sm:mr-3 px-2 sm:px-3 py-1 rounded text-xs sm:text-sm"
+                        className="text-white bg-indigo-600 hover:bg-indigo-500 font-semibold mr-2 sm:mr-3 px-2 sm:px-3 py-1 rounded text-xs sm:text-sm tracking-wide"
                       >
                         Edit
                       </button>
@@ -128,7 +128,7 @@ function Table<T extends { id: number }>({
                     {onDelete && (
                       <button
                         onClick={() => handleDelete(item)}
-                        className="text-white font-medium bg-red-600 group-hover:bg-red-700 hover:bg-red-700 px-2 py-1 rounded text-xs sm:text-sm"
+                        className="text-white font-semibold bg-red-600 group-hover:bg-red-700 hover:bg-red-700 px-2 py-1 rounded text-xs sm:text-sm tracking-wide"
                       >
                         Delete
                       </button>
@@ -142,7 +142,7 @@ function Table<T extends { id: number }>({
       </div>
 
       {data.length === 0 && (
-        <div className="text-center py-12 text-gray-500">
+        <div className="text-center py-12 text-gray-500 font-medium">
           {emptyMessage}
         </div>
       )}
@@ -151,7 +151,7 @@ function Table<T extends { id: number }>({
       {data.length > 0 && totalPages > 1 && (
         <div className="px-3 sm:px-4 md:px-6 py-4 sm:py-5 border-t border-gray-200 bg-white">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-            <div className="text-xs sm:text-sm text-gray-600 text-center sm:text-left">
+            <div className="text-xs sm:text-sm text-gray-600 font-normal text-center sm:text-left">
               Showing <span className="font-semibold text-gray-900">{startIndex + 1}</span> to{' '}
               <span className="font-semibold text-gray-900">{Math.min(endIndex, data.length)}</span> of{' '}
               <span className="font-semibold text-gray-900">{data.length}</span> results
@@ -174,7 +174,7 @@ function Table<T extends { id: number }>({
                   <button
                     key={page}
                     onClick={() => goToPage(page as number)}
-                    className={`inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-md border font-medium transition-all text-xs sm:text-sm ${
+                    className={`inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-md border font-semibold transition-all text-xs sm:text-sm ${
                       currentPage === page
                         ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm hover:bg-indigo-700'
                         : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'

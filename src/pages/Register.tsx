@@ -27,16 +27,16 @@ const Register: React.FC = () => {
         <div className="flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8 bg-gray-50">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Admin Panel" className="mx-auto h-10 w-auto" />
-                <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">Create your account</h2>
+                <h2 className="mt-10 text-center text-xl sm:text-2xl font-bold tracking-tight text-gray-900">Create your account</h2>
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                {error && <p className="text-red-600 bg-red-50 border border-red-200 rounded-md p-3 mb-4 text-sm text-center">{error}</p>}
+                {error && <p className="text-red-600 bg-red-50 border border-red-200 rounded-md p-3 mb-4 text-sm text-center font-medium">{error}</p>}
                 <AuthForm onSubmit={handleRegister} isLogin={false} />
                 
-                <p className="mt-10 text-center text-sm text-gray-600">
+                <p className="mt-10 text-center text-sm text-gray-600 font-normal">
                     Already a member?{' '}
-                    <Link to="/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                    <Link to="/login" className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">
                         Sign in
                     </Link>
                 </p>

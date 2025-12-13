@@ -80,7 +80,7 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
         : isOpen ? 'w-64' : 'w-20'
     }`}>
       <div className="px-3 sm:px-6 py-3 border-b border-gray-200 min-h-[73px] flex items-center justify-between">
-        {isOpen && <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">Admin Panel</h1>}
+        {isOpen && <h1 className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight truncate">Admin Panel</h1>}
         {!isMobile && (
           <button
             onClick={onToggle}
@@ -104,9 +104,9 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
                 <>
                   <a
                     onClick={() => isOpen && toggleMenu(item.label)}
-                    className={`flex items-center ${isOpen ? 'gap-3' : 'justify-center'} px-3 py-2 rounded-md text-sm transition-colors cursor-pointer ${
+                    className={`flex items-center ${isOpen ? 'gap-3' : 'justify-center'} px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
                       isMenuActive(item)
-                        ? 'bg-indigo-600 text-white'
+                        ? 'bg-indigo-600 text-white hover:bg-indigo-700 hover:text-white'
                         : 'text-gray-900 hover:bg-indigo-600 hover:text-white'
                     }`}
                   >
@@ -129,9 +129,9 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
                           <NavLink
                             to={subItem.path}
                             className={({ isActive }) =>
-                              `flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
+                              `flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                                 isActive
-                                  ? 'bg-indigo-600 text-white'
+                                  ? 'bg-indigo-600 text-white hover:bg-indigo-700 hover:text-white'
                                   : 'text-gray-900 hover:bg-indigo-600 hover:text-white'
                               }`
                             }
@@ -149,9 +149,9 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
                 <NavLink
                   to={item.path!}
                   className={({ isActive }) =>
-                    `flex items-center ${isOpen ? 'gap-3' : 'justify-center'} px-3 py-2 rounded-md transition-colors ${
+                    `flex items-center ${isOpen ? 'gap-3' : 'justify-center'} px-3 py-2 rounded-md font-medium transition-colors ${
                       isActive
-                        ? 'bg-indigo-600 text-white'
+                        ? 'bg-indigo-600 text-white hover:bg-indigo-700 hover:text-white'
                         : 'text-gray-900 hover:bg-indigo-600 hover:text-white'
                     }`
                   }
@@ -168,7 +168,7 @@ const Sidebar = ({ isOpen, onToggle, isMobile = false }: SidebarProps) => {
       <div className="p-4 border-t border-gray-200">
         <button
           onClick={handleLogout}
-          className={`w-full px-3 py-2 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white transition-colors ${isOpen ? 'text-left' : 'text-center'}`}
+          className={`w-full px-3 py-2 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold tracking-wide transition-colors ${isOpen ? 'text-left' : 'text-center'}`}
         >
           {isOpen ? 'Logout' : '⎋'}
         </button>
