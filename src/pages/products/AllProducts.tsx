@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -10,6 +11,7 @@ import Table, { type Column } from '@/components/ui/Table';
 import FormInput from '@/components/forms/FormInput';
 import { productSchema, type ProductFormInputs } from '@/schemas/validationSchemas';
 import { productSubmenuItems } from '@/constants/submenuItems';
+import { SUCCESS_MESSAGES } from '@/constants';
 
 const AllProducts = () => {
   const dispatch = useAppDispatch();
@@ -68,24 +70,36 @@ const AllProducts = () => {
   const handleUpdate = (data: ProductFormInputs) => {
     if (!currentProduct) return;
     
-    const updatedProduct: Product = {
-      ...currentProduct,
-      name: data.name,
-      category: data.category,
-      brand: data.brand || '',
-      unit: data.unit,
-      barcode: data.barcode || '',
-      price: parseFloat(data.price),
-      stock: parseInt(data.stock),
-    };
-    
-    dispatch(updateProduct(updatedProduct));
-    setIsModalOpen(false);
-    setCurrentProduct(null);
+    try {
+      const updatedProduct: Product = {
+        ...currentProduct,
+        name: data.name,
+        category: data.category,
+        brand: data.brand || '',
+        unit: data.unit,
+        barcode: data.barcode || '',
+        price: parseFloat(data.price),
+        stock: parseInt(data.stock),
+      };
+      
+      dispatch(updateProduct(updatedProduct));
+      toast.success(SUCCESS_MESSAGES.PRODUCT_UPDATED);
+      setIsModalOpen(false);
+      setCurrentProduct(null);
+    } catch (error) {
+      console.error('Failed to update product:', error);
+      toast.error('Failed to update product. Please try again.');
+    }
   };
 
   const handleDelete = (id: number) => {
-    dispatch(deleteProduct(id));
+    try {
+      dispatch(deleteProduct(id));
+      toast.success(SUCCESS_MESSAGES.PRODUCT_DELETED);
+    } catch (error) {
+      console.error('Failed to delete product:', error);
+      toast.error('Failed to delete product. Please try again.');
+    }
   };
 
   if (loading) {

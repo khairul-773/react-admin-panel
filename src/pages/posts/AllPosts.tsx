@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchPosts, removePost, editPost } from '@/store/slices/postsSlice';
 import Modal from '@/components/ui/Modal';
@@ -9,6 +10,7 @@ import Table, { type Column } from '@/components/ui/Table';
 import FormInput from '@/components/forms/FormInput';
 import { postSchema, type PostFormInputs } from '@/schemas/validationSchemas';
 import { postSubmenuItems } from '@/constants/submenuItems';
+import { SUCCESS_MESSAGES } from '@/constants';
 import type { Post } from '@/types';
 
 const AllPosts = () => {
@@ -46,9 +48,10 @@ const AllPosts = () => {
   const handleDelete = async (id: number): Promise<void> => {
     try {
       await dispatch(removePost(id)).unwrap();
+      toast.success(SUCCESS_MESSAGES.POST_DELETED);
     } catch (error) {
       console.error('Failed to delete post:', error);
-      alert('Failed to delete post');
+      toast.error('Failed to delete post. Please try again.');
     }
   };
 
@@ -60,11 +63,12 @@ const AllPosts = () => {
         id: currentPost.id, 
         post: data 
       })).unwrap();
+      toast.success(SUCCESS_MESSAGES.POST_UPDATED);
       setIsModalOpen(false);
       setCurrentPost(null);
     } catch (error) {
       console.error('Failed to update post:', error);
-      alert('Failed to update post');
+      toast.error('Failed to update post. Please try again.');
     }
   };
 

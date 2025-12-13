@@ -1,12 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useAppDispatch } from '@/store/hooks';
 import { addPost } from '@/store/slices/postsSlice';
 import PageSubmenu from '@/components/ui/PageSubmenu';
 import FormInput from '@/components/forms/FormInput';
 import { postSchema, type PostFormInputs } from '@/schemas/validationSchemas';
 import { postSubmenuItems } from '@/constants/submenuItems';
+import { SUCCESS_MESSAGES } from '@/constants';
 
 const AddPost = () => {
   const dispatch = useAppDispatch();
@@ -24,11 +26,12 @@ const AddPost = () => {
   const onSubmit = async (data: PostFormInputs) => {
     try {
       await dispatch(addPost(data)).unwrap();
+      toast.success(SUCCESS_MESSAGES.POST_ADDED);
       form.reset();
       navigate('/posts/all');
     } catch (error) {
       console.error('Failed to add post:', error);
-      alert('Failed to add post');
+      toast.error('Failed to add post. Please try again.');
     }
   };
 

@@ -1,6 +1,8 @@
 import { createContext, useContext, ReactNode, useState, useCallback } from 'react';
+import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { loginSuccess, logout as logoutAction, loginStart, loginFailure } from '@/store/slices/authSlice';
+import { SUCCESS_MESSAGES } from '@/constants';
 
 /**
  * User authentication data interface
@@ -119,6 +121,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const userData: AuthUser = { email, token };
       
       dispatch(loginSuccess(userData));
+      toast.success(SUCCESS_MESSAGES.REGISTER_SUCCESS);
     } catch (err) {
       const authError: AuthError = {
         message: err instanceof Error ? err.message : 'Registration failed',
@@ -126,6 +129,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       };
       setError(authError);
       dispatch(loginFailure());
+      toast.error(authError.message);
       throw authError;
     }
   }, [dispatch]);
@@ -136,6 +140,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = useCallback(() => {
     setError(null);
     dispatch(logoutAction());
+    toast.info(SUCCESS_MESSAGES.LOGOUT_SUCCESS);
   }, [dispatch]);
 
   const value: AuthContextType = {

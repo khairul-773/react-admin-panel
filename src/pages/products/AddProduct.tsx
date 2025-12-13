@@ -1,12 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addProduct } from '@/store/slices/productsSlice';
 import PageSubmenu from '@/components/ui/PageSubmenu';
 import FormInput from '@/components/forms/FormInput';
 import { productSchema, type ProductFormInputs } from '@/schemas/validationSchemas';
 import { productSubmenuItems } from '@/constants/submenuItems';
+import { SUCCESS_MESSAGES } from '@/constants';
 
 const AddProduct = () => {
   const dispatch = useAppDispatch();
@@ -30,20 +32,26 @@ const AddProduct = () => {
   });
 
   const onSubmit = (data: ProductFormInputs) => {
-    const newProduct = {
-      id: Date.now(),
-      name: data.name,
-      category: data.category,
-      brand: data.brand || '',
-      unit: data.unit,
-      barcode: data.barcode || '',
-      price: parseFloat(data.price),
-      stock: parseInt(data.stock),
-      createdAt: new Date().toISOString(),
-    };
-    dispatch(addProduct(newProduct));
-    form.reset();
-    navigate('/products/all');
+    try {
+      const newProduct = {
+        id: Date.now(),
+        name: data.name,
+        category: data.category,
+        brand: data.brand || '',
+        unit: data.unit,
+        barcode: data.barcode || '',
+        price: parseFloat(data.price),
+        stock: parseInt(data.stock),
+        createdAt: new Date().toISOString(),
+      };
+      dispatch(addProduct(newProduct));
+      toast.success(SUCCESS_MESSAGES.PRODUCT_ADDED);
+      form.reset();
+      navigate('/products/all');
+    } catch (error) {
+      console.error('Failed to add product:', error);
+      toast.error('Failed to add product. Please try again.');
+    }
   };
 
   const categoryOptions = categories.map(cat => ({ value: cat.name, label: cat.name }));
