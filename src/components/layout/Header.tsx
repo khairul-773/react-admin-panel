@@ -69,7 +69,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
           <div className="relative">
             <button
               onClick={() => setShowProfileMenu(!showProfileMenu)}
-              className="flex items-center gap-3 pl-4 border-l border-gray-200 hover:bg-gray-50 rounded-lg transition-colors p-2"
+              className="flex items-center gap-3 pl-4 border-l border-gray-200 bg-transparent"
             >
               <div className="text-right hidden sm:block">
                 <p className="text-sm font-semibold text-gray-900">{user?.email}</p>
@@ -105,7 +105,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
                       setShowProfileMenu(false);
                       logout();
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                    className="w-full flex items-center gap-3 px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-700 rounded-md transition-colors"
                   >
                     <MdLogout className="text-lg" />
                     <span>Logout</span>

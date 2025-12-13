@@ -110,7 +110,7 @@ const Profile: React.FC = () => {
               </div>
               <button
                 onClick={() => setIsEditingProfile(!isEditingProfile)}
-                className="px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 border border-indigo-200 rounded-md hover:bg-indigo-50 transition-colors"
+                className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md transition-colors"
               >
                 {isEditingProfile ? 'Cancel' : 'Edit'}
               </button>
