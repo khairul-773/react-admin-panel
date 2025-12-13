@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { MdDashboard, MdPeople, MdDescription, MdShoppingCart, MdAdd, MdInventory, MdCategory, MdBrandingWatermark, MdStraighten, MdQrCode2, MdChevronRight } from 'react-icons/md';
+import { MdDashboard, MdPeople, MdDescription, MdShoppingCart, MdAdd, MdInventory, MdCategory, MdBrandingWatermark, MdStraighten, MdQrCode2, MdKeyboardArrowRight, MdKeyboardArrowDown, MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft } from 'react-icons/md';
+
+interface SidebarProps {
+  isOpen: boolean;
+  onToggle: () => void;
+}
 
 const menuItems = [
   { path: '/dashboard', label: 'Dashboard', icon: <MdDashboard /> },
@@ -28,7 +33,7 @@ const menuItems = [
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useAuth();
@@ -68,9 +73,21 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col">
-      <div className="px-6 py-3 border-b border-gray-200 min-h-[73px] flex items-center">
-        <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
+    <aside className={`fixed left-0 top-0 h-screen bg-white border-r border-gray-200 flex flex-col z-50 transition-all duration-300 ${
+      isOpen ? 'w-64' : 'w-20'
+    }`}>
+      <div className="px-6 py-3 border-b border-gray-200 min-h-[73px] flex items-center justify-between">
+        {isOpen && <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>}
+        <button
+          onClick={onToggle}
+          className="text-gray-900 hover:text-[#4361ee] ml-auto !bg-transparent !p-0 !rounded-none"
+        >
+          {isOpen ? (
+            <MdKeyboardDoubleArrowRight className="text-2xl" />
+          ) : (
+            <MdKeyboardDoubleArrowLeft className="text-2xl" />
+          )}
+        </button>
       </div>
 
       <nav className="flex-1 p-4 overflow-y-auto">
@@ -81,22 +98,26 @@ const Sidebar = () => {
                 // Menu with submenu
                 <>
                   <a
-                    onClick={() => toggleMenu(item.label)}
-                    className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors cursor-pointer ${
+                    onClick={() => isOpen && toggleMenu(item.label)}
+                    className={`flex items-center ${isOpen ? 'gap-3' : 'justify-center'} px-3 py-2 rounded-md text-sm transition-colors cursor-pointer ${
                       isMenuActive(item)
                         ? 'bg-[#4361ee] text-white'
                         : 'text-gray-900 hover:bg-[#4361ee] hover:text-white'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <span>{item.icon}</span>
-                      <span>{item.label}</span>
-                    </div>
-                    <MdChevronRight className={`transition-transform ${openMenus[item.label] ? 'rotate-90' : ''}`} />
+                    <span>{item.icon}</span>
+                    {isOpen && (
+                      <>
+                        <span>{item.label}</span>
+                        <span className="ml-auto">
+                          {openMenus[item.label] ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
+                        </span>
+                      </>
+                    )}
                   </a>
 
                   {/* Submenu */}
-                  {openMenus[item.label] && (
+                  {isOpen && openMenus[item.label] && (
                     <ul className="mt-2 ml-6 space-y-1 border-l-2 border-gray-200 pl-3">
                       {item.submenu.map((subItem) => (
                         <li key={subItem.path}>
@@ -123,7 +144,7 @@ const Sidebar = () => {
                 <NavLink
                   to={item.path!}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
+                    `flex items-center ${isOpen ? 'gap-3' : 'justify-center'} px-3 py-2 rounded-md transition-colors ${
                       isActive
                         ? 'bg-[#4361ee] text-white'
                         : 'text-gray-900 hover:bg-[#4361ee] hover:text-white'
@@ -131,7 +152,7 @@ const Sidebar = () => {
                   }
                 >
                   <span>{item.icon}</span>
-                  <span>{item.label}</span>
+                  {isOpen && <span>{item.label}</span>}
                 </NavLink>
               )}
             </li>
@@ -142,9 +163,9 @@ const Sidebar = () => {
       <div className="p-4 border-t border-gray-200">
         <button
           onClick={handleLogout}
-          className="w-full px-3 py-2 text-left rounded-md bg-[#4361ee] hover:bg-[#3651de] text-white transition-colors"
+          className={`w-full px-3 py-2 rounded-md bg-[#4361ee] hover:bg-[#3651de] text-white transition-colors ${isOpen ? 'text-left' : 'text-center'}`}
         >
-          Logout
+          {isOpen ? 'Logout' : '⎋'}
         </button>
       </div>
     </aside>

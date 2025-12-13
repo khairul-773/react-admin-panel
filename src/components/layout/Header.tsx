@@ -33,10 +33,10 @@ const Header = () => {
           <div className="relative">
             <button
               onClick={() => setShowNotifications(!showNotifications)}
-              className="relative p-2 text-gray-900 hover:bg-[#4361ee] hover:text-white rounded-lg transition-colors border border-transparent hover:border-[#4361ee]"
+              className="relative p-2 text-white bg-[#4361ee] hover:bg-[#3651de] rounded-lg transition-colors"
             >
               <MdNotifications className="text-xl" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-[#4361ee] rounded-full"></span>
+              <span className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full"></span>
             </button>
 
             {showNotifications && (
